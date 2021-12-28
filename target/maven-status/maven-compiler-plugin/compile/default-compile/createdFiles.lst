@@ -1,0 +1,12 @@
+com\prajina\academy\model\Module.class
+com\prajina\academy\configuration\AcademyConfiguration.class
+com\prajina\academy\controller\CourseController.class
+com\prajina\academy\service\ModuleServiceImpl.class
+com\prajina\academy\model\Course.class
+com\prajina\academy\service\ModuleService.class
+com\prajina\academy\controller\LoginController.class
+com\prajina\academy\model\Login.class
+com\prajina\academy\service\CourseServiceImpl.class
+com\prajina\academy\service\CourseService.class
+com\prajina\academy\controller\CourseRestController.class
+com\prajina\academy\configuration\AcademyInitializer.class
