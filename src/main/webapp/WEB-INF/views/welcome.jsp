@@ -24,7 +24,7 @@
   
 <div class="container">
   <h3> Welcome ${firstname} </h3>
-  <a href="/PrajinaAcademy/v1/course">List All Courses (Async)</a>  
+  <a href="/PrajinaAcademy/v1/courses">List All Courses (Async)</a>  
 </div>
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> 
 </body>

@@ -24,7 +24,7 @@ public class CourseRestController {
 	@Autowired
 	CourseService courseService;
 
-	@RequestMapping(value = "/course/", method = RequestMethod.GET)
+	@RequestMapping(value = "/course", method = RequestMethod.GET)
 	public ResponseEntity<List<Course>> listAllCourses() {
 		System.out.println("Rest GET");
 		List<Course> courses = courseService.findAll();

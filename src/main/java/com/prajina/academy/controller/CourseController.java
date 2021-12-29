@@ -23,7 +23,7 @@ public class CourseController {
 	@Autowired
 	CourseService service;
 
-	@GetMapping("/v1/course")
+	@GetMapping("/v1/courses")
 	public String getIndexPage() {
 		System.out.println("V1");
 		return "courseAsync";

@@ -1,19 +1,23 @@
-'use strict';
+(function() {
+	'use strict';
+	angular.module('myApp'
+		.service('CourseService', CourseService));
+		
+	CourseService.$inject = ['$http', '$q'];
+	
+	function CourseService($http, $q) {
+		var REST_SERVICE_URI = 'http://localhost:8080/PrajinaAcademy/courses'; 
+		
+		var factory = {
+	        fetchAllCourses: fetchAllCourses,
+	        createCourse: createCourse,
+	        updateCourse:updateCourse,
+	        deleteCourse:deleteCourse
+    	};
 
-angular.module('myApp').factory('AcademyService', ['$http', '$q', function($http, $q) {
- 
-    var REST_SERVICE_URI = 'http://localhost:8080/PrajinaAcademy/courses';
- 
-    var factory = {
-        fetchAllCourses: fetchAllCourses,
-        createCourse: createCourse,
-        updateCourse:updateCourse,
-        deleteCourse:deleteCourse
-    };
- 
-    return factory;
-
-	function fetchAllCourses() {
+		return service;
+		
+		function fetchAllCourses() {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI)
             .then(
@@ -28,7 +32,7 @@ angular.module('myApp').factory('AcademyService', ['$http', '$q', function($http
         return deferred.promise;
     }
  
- function createCourse(user) {
+ 	function createCourse(user) {
         var deferred = $q.defer();
         $http.post(REST_SERVICE_URI, user)
             .then(
@@ -73,5 +77,5 @@ angular.module('myApp').factory('AcademyService', ['$http', '$q', function($http
         );
         return deferred.promise;
     }
- 
-}]);
+    }		
+})();

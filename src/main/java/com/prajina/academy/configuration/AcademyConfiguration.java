@@ -21,7 +21,7 @@ public class AcademyConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		System.out.println("Rest configureViewResolvers");
+		System.out.println("Rest addResourceHandlers");
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/views/");
@@ -32,6 +32,6 @@ public class AcademyConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System.out.println("Rest addResourceHandlers");
-		registry.addResourceHandler("static/**").addResourceLocations("/static");
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
 }
