@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +19,23 @@ import com.prajina.academy.model.Course;
 import com.prajina.academy.service.CourseService;
 
 @RestController
-@RequestMapping("/PrajinaAcademy/v1")
+@RequestMapping("/rest")
 public class CourseRestController {
 
 	@Autowired
 	CourseService courseService;
 
-	@RequestMapping(value = "/course", method = RequestMethod.GET)
-	public ResponseEntity<List<Course>> listAllCourses() {
+	@GetMapping("/courses")
+	public ResponseEntity<?> listAllCourses() {
 		System.out.println("Rest GET");
 		List<Course> courses = courseService.findAll();
+
 		if (courses.isEmpty()) {
-			return new ResponseEntity<List<Course>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No Courses Found", HttpStatus.OK);
 		}
+
+		System.out.println("courses not empty :: " + courses);
+		System.out.println("response entity :: " + new ResponseEntity<List<Course>>(courses, HttpStatus.OK));
 		return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
 	}
 

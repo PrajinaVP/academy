@@ -15,7 +15,7 @@
       <a class="navbar-brand" href="#">Home</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="/PrajinaAcademy/courses">Courses</a></li>
+      <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
       <li class="nav-item"><a class="nav-link" href="#login">Modules</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Assignments</a></li>
     </ul>
@@ -24,8 +24,8 @@
   
 <div class="container">
   <h3> Welcome ${firstname} </h3>
-  <a href="/PrajinaAcademy/v1/courses">List All Courses (Async)</a>  
+  <a href="/v1/courses">List All Courses (Async)</a>  
 </div>
- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script> 
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script> 
 </body>
 </html>

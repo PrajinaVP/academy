@@ -1,4 +1,5 @@
 (function() {
+	
 	'use strict';
 	angular.module('myApp')
 	.controller('CourseController', CourseController);
@@ -9,23 +10,28 @@
 		var vm = this;
 		vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
 		vm.courses = [];
+		vm.fetchAllCourses = fetchAllCourses;
 		
-		vm.init = function() {
+		fetchAllCourses();
+	/*	vm.init = function() {
 			vm.fetchAllCourses();
 			vm.createCourse();
 		}
-		
-		vm.fetchAllCourses = function(){
+		*/
+		function fetchAllCourses(){
 	        CourseService.fetchAllCourses()
 	            .then(
-	            function(d) {
-	                vm.courses = d;
+	            function(data) {
+	                vm.courses = data;
+console.log("courses :: \n " + data);
+					return vm.courses;
 	            },
 	            function(errResponse){
 	                console.error('Error while fetching Courses :: \n' + errResponse);
 	            }
 	        );
     	}
+
 
  		vm.createCourse = function(course){
         CourseService.createCourse(course)
@@ -92,4 +98,5 @@
         $scope.myForm.$setPristine(); //reset Form
     }
   }
+
 })();
