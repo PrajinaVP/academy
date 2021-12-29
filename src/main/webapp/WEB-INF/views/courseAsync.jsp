@@ -18,6 +18,7 @@
             </tr>
             <tbody>
               <tr ng-repeat="course in ctrl.courses">
+              <td>2222</td>
 		        <td>${course.id}</td>  
 		        <td>${course.name}</td>  
 		        <td>${course.desc}</td>  

@@ -1,14 +1,14 @@
 (function() {
 	'use strict';
-	angular.module('myApp'
-		.service('CourseService', CourseService));
+	angular.module('myApp')
+		.service('CourseService', CourseService);
 		
 	CourseService.$inject = ['$http', '$q'];
 	
 	function CourseService($http, $q) {
 		var REST_SERVICE_URI = 'http://localhost:8080/PrajinaAcademy/courses'; 
 		
-		var factory = {
+		var service = {
 	        fetchAllCourses: fetchAllCourses,
 	        createCourse: createCourse,
 	        updateCourse:updateCourse,
