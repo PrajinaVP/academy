@@ -3,7 +3,7 @@ package com.prajina.academy.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import com.prajina.academy.model.Course;
 @Service("CourseService")
 public class CourseServiceImpl implements CourseService {
 
-	private static final AtomicInteger counter = new AtomicInteger();
+	private static final AtomicLong counter = new AtomicLong();
 
 	// TODO Read from xls file
 	private static List<Course> courses;
@@ -27,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Course findById(Integer id) {
+	public Course findById(long id) {
 		for (Course course : courses) {
 			if (course.getId() == id) {
 				return course;
@@ -65,7 +65,7 @@ public class CourseServiceImpl implements CourseService {
 		if (course == null) {
 			throw new RuntimeException("No course provided!");
 		}
-		Integer id = counter.incrementAndGet();
+		long id = counter.incrementAndGet();
 		course.setId(id);
 		courses.add(course);
 
@@ -109,7 +109,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public void deleteById(long id) {
 
 		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
 			Course course = iterator.next();

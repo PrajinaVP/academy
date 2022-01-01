@@ -19,7 +19,9 @@
 				<th>Contact</th>
             </tr>
             <tbody>
+          <div>ctrl.courses  ${JSON.stringify(ctrl) }</div>
               <tr ng-repeat="course in ctrl.courses">
+                <div>course ${JSON.stringify(course) }</div>
 		        <td>${course.id}</td>  
 		        <td>${course.name}</td>  
 		        <td>${course.desc}</td>  
@@ -31,7 +33,7 @@
     </div>
        
     <script src="<c:url value='/static/js/app.js' />"></script>
-    <script src="<c:url value='/static/js/service/course_service.js' />"></script>
-    <script src="<c:url value='/static/js/controller/course_controller.js' />"></script>
+    <script src="<c:url value='/static/js/course_service.js' />"></script>
+    <script src="<c:url value='/static/js/course_controller.js' />"></script>
   </body>
 </html>

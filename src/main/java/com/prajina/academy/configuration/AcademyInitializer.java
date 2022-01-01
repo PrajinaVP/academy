@@ -1,7 +1,5 @@
 package com.prajina.academy.configuration;
 
-import javax.servlet.Filter;
-
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AcademyInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -13,7 +11,7 @@ public class AcademyInitializer extends AbstractAnnotationConfigDispatcherServle
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return null;
+		return new Class[] { AcademyConfiguration.class };
 	}
 
 	@Override

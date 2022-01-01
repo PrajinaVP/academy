@@ -22,6 +22,7 @@
 	      return $http.get(REST_SERVICE_URI)
 	            .then(
 	            function (response) {
+		console.log("service data :: "+ JSON.stringify(response));
 				$log.debug("service data :: "+ JSON.stringify(response));
 	    
 					return response.data;

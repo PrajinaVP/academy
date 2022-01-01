@@ -8,7 +8,7 @@ public interface CourseService {
 
 	List<Course> findAll();
 
-	Course findById(Integer id);
+	Course findById(long id);
 
 	Course findByName(String name);
 
@@ -24,9 +24,9 @@ public interface CourseService {
 
 	void deleteCourse(List<Course> courseList);
 
-	void deleteById(Integer id);
-
 	void deleteAll();
+
+	void deleteById(long id);
 
 	boolean isCourseExist(Course course);
 

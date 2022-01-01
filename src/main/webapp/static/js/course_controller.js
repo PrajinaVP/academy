@@ -8,7 +8,7 @@
 	
 	function CourseController(CourseService) {
 		var vm = this;
-		vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
+		//vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
 		vm.courses = [];
 		vm.fetchAllCourses = fetchAllCourses;
 		
@@ -23,7 +23,8 @@
 	            .then(
 	            function(data) {
 	                vm.courses = data;
-console.log("courses :: \n " + data);
+console.log("courses stringified:: \n " + JSON.stringify(data));
+console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
 					return vm.courses;
 	            },
 	            function(errResponse){

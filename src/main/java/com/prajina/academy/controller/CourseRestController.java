@@ -19,13 +19,13 @@ import com.prajina.academy.model.Course;
 import com.prajina.academy.service.CourseService;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/rest/courses")
 public class CourseRestController {
 
 	@Autowired
 	CourseService courseService;
 
-	@GetMapping("/courses")
+	@GetMapping(value = "")
 	public ResponseEntity<?> listAllCourses() {
 		System.out.println("Rest GET");
 		List<Course> courses = courseService.findAll();
@@ -36,11 +36,11 @@ public class CourseRestController {
 
 		System.out.println("courses not empty :: " + courses);
 		System.out.println("response entity :: " + new ResponseEntity<List<Course>>(courses, HttpStatus.OK));
-		return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
+		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/course/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Course> getCourse(@PathVariable("id") Integer id) {
+	public ResponseEntity<Course> getCourse(@PathVariable("id") long id) {
 		System.out.println("Fetching Course with id " + id);
 		Course course = courseService.findById(id);
 		if (course == null) {
@@ -67,7 +67,7 @@ public class CourseRestController {
 	}
 
 	@RequestMapping(value = "/course/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<Course> updateCourse(@PathVariable("id") Integer id, @RequestBody Course course) {
+	public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
 		System.out.println("Updating Course " + id);
 
 		Course currentCourse = courseService.findById(id);
@@ -90,7 +90,7 @@ public class CourseRestController {
 	}
 
 	@RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Course> deleteCourseById(@PathVariable("id") Integer id) {
+	public ResponseEntity<Course> deleteCourseById(@PathVariable("id") long id) {
 		System.out.println("Fetching & Deleting Course with id " + id);
 
 		Course course = courseService.findById(id);
