@@ -21,7 +21,7 @@ public class LoginController {
 	public String submit(Model model, @ModelAttribute("login") Login login) {
 		if (login != null && login.getUserName() != null & login.getPassword() != null) {
 			if (login.getUserName().equals("philonoist") && login.getPassword().equals("philonoist")) {
-				model.addAttribute("msg", login.getUserName());
+				model.addAttribute("user", login.getUserName());
 				return "welcome";
 			} else {
 				model.addAttribute("error", "Invalid Details");

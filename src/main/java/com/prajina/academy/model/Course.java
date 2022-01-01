@@ -1,5 +1,7 @@
 package com.prajina.academy.model;
 
+import java.util.Objects;
+
 /**
  * This class represent the courses
  * 
@@ -70,6 +72,24 @@ public class Course {
 
 	public void setContact(String contact) {
 		this.contact = contact;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(contact, desc, id, name, status);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		return Objects.equals(contact, other.contact) && Objects.equals(desc, other.desc) && id == other.id
+				&& Objects.equals(name, other.name) && Objects.equals(status, other.status);
 	}
 
 	@Override

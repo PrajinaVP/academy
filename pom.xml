@@ -20,7 +20,6 @@
   </properties>
   
   <dependencies>
-
   	<!-- JSTL Dependency -->
     <dependency>
       <groupId>javax.servlet.jsp.jstl</groupId>
@@ -59,11 +58,6 @@
         </dependency>
          
 		<!-- Jackson JSON Mapper -->
-	    <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

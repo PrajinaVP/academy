@@ -8,9 +8,9 @@
 	
 	function CourseController(CourseService) {
 		var vm = this;
-		//vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
+		vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
 		vm.courses = [];
-		vm.fetchAllCourses = fetchAllCourses;
+		//vm.fetchAllCourses = fetchAllCourses;
 		
 		fetchAllCourses();
 	/*	vm.init = function() {

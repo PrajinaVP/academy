@@ -4,29 +4,32 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Show Courses with angularjs</title>
+<title>List of Courses with AngularJS</title>
     
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+ <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
 <body ng-app="myApp">
-    <div class="generic-container" ng-controller="CourseController as ctrl">
-        <table border="1">
-            <tr>
-              	<th>Id</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Status</th>
-				<th>Contact</th>
-            </tr>
+	<jsp:include page="header.jsp"/>
+  	<div class="generic-container text-center" ng-controller="CourseController as ctrl">
+       <table class="table table-hover table-striped" border=1>
+         	<thead>
+	            <tr class="table-dark">
+	              	<th>Id</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Contact</th>
+	            </tr>
+            </thead>
             <tbody>
-          <div>ctrl.courses  ${JSON.stringify(ctrl) }</div>
-              <tr ng-repeat="course in ctrl.courses">
-                <div>course ${JSON.stringify(course) }</div>
-		        <td>${course.id}</td>  
-		        <td>${course.name}</td>  
-		        <td>${course.desc}</td>  
-		        <td>${course.status}</td> 
-		        <td>${course.contact}</td>
+              <tr class="table-dark" ng-repeat="course in ctrl.courses">
+		        <td>{{course.id}}</td>  
+		        <td>{{course.name}}</td>  
+		        <td>{{course.desc}}</td>  
+		        <td>{{course.status}}</td> 
+		        <td>{{course.contact}}</td>
               </tr>
             </tbody>
         </table>
