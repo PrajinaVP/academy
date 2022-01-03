@@ -4,31 +4,26 @@
 	angular.module('myApp')
 	.controller('CourseController', CourseController);
 	
-	CourseController.$inject = ['CourseService'];
+	CourseController.$inject = ['CourseService', '$log'];
 	
-	function CourseController(CourseService) {
+	function CourseController(CourseService, $log) {
 		var vm = this;
 		vm.course = {id: null, name: '', desc: '',status: '', contact: '' };
 		vm.courses = [];
-		//vm.fetchAllCourses = fetchAllCourses;
+		vm.fetchAllCourses = fetchAllCourses;
 		
 		fetchAllCourses();
-	/*	vm.init = function() {
-			vm.fetchAllCourses();
-			vm.createCourse();
-		}
-		*/
+
 		function fetchAllCourses(){
 	        CourseService.fetchAllCourses()
 	            .then(
 	            function(data) {
 	                vm.courses = data;
-console.log("courses stringified:: \n " + JSON.stringify(data));
-console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
+					$log.debug('Courses  :: ' + JSON.stringify(vm.courses));
 					return vm.courses;
 	            },
 	            function(errResponse){
-	                console.error('Error while fetching Courses :: \n' + errResponse);
+	                $log.error('Error while fetching Courses :: \n' + errResponse);
 	            }
 	        );
     	}
@@ -39,7 +34,7 @@ console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
             .then(
             fetchAllCourses,
             function(errResponse){
-                console.error('Error while creating Course');
+                $log.error('Error while creating Course');
             }
         );
     }
@@ -49,7 +44,7 @@ console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
             .then(
             fetchAllCourses,
             function(errResponse){
-                console.error('Error while updating Course');
+                $log.error('Error while updating Course');
             }
         );
     }
@@ -59,24 +54,24 @@ console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
             .then(
             fetchAllCourses,
             function(errResponse){
-                console.error('Error while deleting Course');
+                $log.error('Error while deleting Course');
             }
         );
     }
  
     vm.submit = function() {
         if(vm.course.id===null){
-            console.log('Saving New Course', vm.course);
+            $log.debug('Saving New Course', vm.course);
             createCourse(vm.course);
         }else{
             updateCourse(vm.course, vm.course.id);
-            console.log('Course updated with id ', vm.course.id);
+            $log.debug('Course updated with id ', vm.course.id);
         }
         reset();
     }
  
     vm.edit = function(id){
-        console.log('id to be edited', id);
+        $log.debug('id to be edited', id);
         for(var i = 0; i < vm.courses.length; i++){
             if(vm.courses[i].id === id) {
                 vm.course = angular.copy(vm.courses[i]);
@@ -86,8 +81,8 @@ console.log("vm.courses stringified:: \n " + JSON.stringify(vm.courses));
     }
  
     vm.remove = function(id){
-        console.log('id to be deleted', id);
-        if(vm.course.id === id) {//clean form if the course to be deleted is shown there.
+        $log.debug('id to be deleted', id);
+        if(vm.course.id === id) {
             reset();
         }
         deleteCourse(id);

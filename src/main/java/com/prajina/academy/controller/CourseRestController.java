@@ -78,13 +78,14 @@ public class CourseRestController {
 		}
 
 		// TODO Delete commented lines after confirming that PATCH works
-
-//		currentCourse.setName(course.getName());
-//		currentCourse.setDesc(course.getDesc());
-//		currentCourse.setStatus(course.getStatus());
-//		currentCourse.setContact(course.getContact());
-
-//		courseService.updateCourse(currentCourse);
+		/*
+		 * currentCourse.setName(course.getName());
+		 * currentCourse.setDesc(course.getDesc());
+		 * currentCourse.setStatus(course.getStatus());
+		 * currentCourse.setContact(course.getContact());
+		 * 
+		 * courseService.updateCourse(currentCourse);
+		 */
 		Course updatedCourse = courseService.update(course);
 		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
 	}
@@ -115,7 +116,6 @@ public class CourseRestController {
 
 		// TODO Throw custom exception
 		return new ResponseEntity<Course>(HttpStatus.INTERNAL_SERVER_ERROR);
-
 	}
 
 }

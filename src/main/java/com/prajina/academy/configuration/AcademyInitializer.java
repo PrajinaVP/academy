@@ -19,8 +19,4 @@ public class AcademyInitializer extends AbstractAnnotationConfigDispatcherServle
 		return new String[] { "/" };
 	}
 
-	/*
-	 * @Override protected Filter[] getServletFilters() { Filter[] singleton = { new
-	 * CORSFilter() }; return singleton; }
-	 */
 }

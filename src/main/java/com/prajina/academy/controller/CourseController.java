@@ -24,8 +24,7 @@ public class CourseController {
 	CourseService service;
 
 	@GetMapping("/v1/courses")
-	public String getIndexPage() {
-		System.out.println("V1");
+	public String getCourse() {
 		return "courseAsync";
 	}
 
@@ -66,15 +65,5 @@ public class CourseController {
 		m.addAttribute("command", new Course());
 		return "courseForm";
 	}
-//	@GetMapping("/courses")
-//	public ResponseEntity<List<Course>> findAllCourses() {
-//		// TODO Use Optional
-//		List<Course> courses = service.findAllCourses();
-//		if (courses.isEmpty()) {
-//			return new ResponseEntity<List<Course>>(HttpStatus.NO_CONTENT);
-//		}
-//
-//		return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
-//	}
 
 }
