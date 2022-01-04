@@ -6,22 +6,28 @@ import com.prajina.academy.model.Module;
 
 public interface ModuleService {
 
-	Module findById(Integer id);
+	List<Module> findAll();
+
+	Module findById(Long id);
 
 	Module findByName(String name);
 
-	List<Module> findAllModules();
+	List<Module> findByDesc(String desc);
 
-	Module createModule(Module Module);
+	Module create(Module module);
 
-	Module createModule(List<Module> Module);
+	List<Module> create(List<Module> module);
 
-	Module updateModule(Module Module);
+	Module update(Module module);
 
-	Module updateModule(List<Module> Module);
+	void updateModule(List<Module> module);
 
-	void deleteModule(List<Module> ModuleList);
+	void deleteModule(List<Module> moduleList);
 
-	boolean isModuleExist(Module Module);
+	void deleteAll();
+
+	void deleteById(Long id);
+
+	boolean isModuleExist(Module module);
 
 }

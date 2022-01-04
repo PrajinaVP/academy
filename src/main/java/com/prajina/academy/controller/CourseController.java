@@ -18,21 +18,22 @@ import com.prajina.academy.model.Course;
 import com.prajina.academy.service.CourseService;
 
 @Controller
+@RequestMapping("/academy/course")
 public class CourseController {
 
 	@Autowired
-	CourseService service;
+	private CourseService service;
 
-	@GetMapping("/v1/courses")
+	@GetMapping("/async")
 	public String getCourse() {
 		return "courseAsync";
 	}
 
-	@GetMapping("/courses")
+	@GetMapping("")
 	public ModelAndView getCourses(HttpServletRequest request, HttpServletResponse response) {
-		List<Course> courses = service.findAll();
+		List<Course> courseList = service.findAll();
 		ModelAndView mav = new ModelAndView("course");
-		mav.addObject("courses", courses);
+		mav.addObject("courseList", courseList);
 
 		return mav;
 	}
@@ -40,7 +41,6 @@ public class CourseController {
 	@PostMapping("/save")
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("course") Course course) {
-		System.out.println("Course Controller :: save :: " + course.toString());
 		/*
 		 * if (course == null || course.getName().isEmpty()) { throw new
 		 * RuntimeException("Please provide course name"); }
@@ -53,16 +53,15 @@ public class CourseController {
 		}
 
 		List<Course> courses = service.findAll();
-		System.out.println("\n\ncourses :: \n" + courses);
 		ModelAndView mav = new ModelAndView("course");
-		mav.addObject("courses", courses);
+		mav.addObject("courseList", courses);
 
 		return mav;
 	}
 
 	@RequestMapping("/courseForm")
 	public String showform(Model m) {
-		m.addAttribute("command", new Course());
+		m.addAttribute("course", new Course());
 		return "courseForm";
 	}
 

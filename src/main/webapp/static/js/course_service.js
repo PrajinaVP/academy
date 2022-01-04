@@ -6,7 +6,7 @@
 	CourseService.$inject = ['$http', '$log'];
 	
 	function CourseService($http, $log) {
-		var REST_SERVICE_URI = 'http://localhost:8080/rest/courses'; 
+		var REST_SERVICE_URI = 'http://localhost:8080/rest/course'; 
 		
 		var service = {
 	        fetchAllCourses: fetchAllCourses,
@@ -20,15 +20,13 @@
 		function fetchAllCourses() {
 	 
 	      return $http.get(REST_SERVICE_URI)
-	            .then(
-	            function (response) {
-				$log.debug("service data :: "+ JSON.stringify(response));
-	    
+	            .then( function (response) {
+					$log.debug(`service data :: ${JSON.stringify(response)}`);
+	   
 					return response.data;
-	
 	            },
 	            function(errResponse){
-	                $log.error('Error while fetching Courses');
+	                $log.error(`Error while fetching Courses ${errResponse}`);
 					//optional error handling in UI
 	            }
 	        );
@@ -36,50 +34,53 @@
 	       
 	    }
 	 
-	 	function createCourse(user) {
-	        var deferred = $q.defer();
-	        $http.post(REST_SERVICE_URI, user)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
+	 	function createCourse(course) {
+		
+	        return $http.post(REST_SERVICE_URI, course)
+	            .then( function (response) {
+					$log.debug(`create course response :: ${JSON.stringify(response)}`);
+	                return response.data;
 	            },
 	            function(errResponse){
-	                console.error('Error while creating Course');
-	                deferred.reject(errResponse);
+	                 $log.error(`Error while creating Courses ${errResponse}`);
+					//optional error handling in UI
 	            }
 	        );
-	        return deferred.promise;
+	
 	    }
 	 
 	 
-	    function updateCourse(user, id) {
-	        var deferred = $q.defer();
-	        $http.put(REST_SERVICE_URI+id, user)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
+	    function updateCourse(course, id) {
+	        
+	        $http.put(REST_SERVICE_URI+id, course)
+	            .then( function (response) {
+	                $log.debug(`update course response :: ${JSON.stringify(response)}`);
+	   
+					return response.data;
 	            },
 	            function(errResponse){
-	                console.error('Error while updating Course');
-	                deferred.reject(errResponse);
+	                 $log.error(`Error while updating Courses ${errResponse}`);
+					//optional error handling in UI
 	            }
 	        );
-	        return deferred.promise;
+	        
 	    }
 	 
 	    function deleteCourse(id) {
-	        var deferred = $q.defer();
-	        $http.delete(REST_SERVICE_URI+id)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
+	        
+	        return $http.delete(REST_SERVICE_URI+id)
+	            .then( function (response) {
+	               $log.debug(`delete course response :: ${JSON.stringify(response)}`);
+	   
+					return response.data;
 	            },
 	            function(errResponse){
-	                console.error('Error while deleting Course');
-	                deferred.reject(errResponse);
+	                 $log.error(`Error while deleting Courses ${errResponse}`);
+					//optional error handling in UI
 	            }
 	        );
-	        return deferred.promise;
+	        
 	    }
+
     }		
 })();

@@ -3,17 +3,17 @@ package com.prajina.academy.model;
 import java.util.Objects;
 
 public class Module {
-
-	private Integer id;
+	//Long 
+	private Long id;
 	private String name;
 	private String desc;
-	private Integer courseId; // Can a module be part of multiple courses?
+	private Long courseId; // Can a module be part of multiple courses?
 
 	public Module() {
 		super();
 	}
 
-	public Module(Integer id, String name, String desc, Integer courseId) {
+	public Module(Long id, String name, String desc, Long courseId) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -21,11 +21,11 @@ public class Module {
 		this.courseId = courseId;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -45,17 +45,17 @@ public class Module {
 		this.desc = desc;
 	}
 
-	public Integer getCourseId() {
+	public Long getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(Integer courseId) {
+	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(courseId, desc, id, name);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -67,8 +67,7 @@ public class Module {
 		if (getClass() != obj.getClass())
 			return false;
 		Module other = (Module) obj;
-		return Objects.equals(courseId, other.courseId) && Objects.equals(desc, other.desc)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(id, other.id);
 	}
 
 	@Override

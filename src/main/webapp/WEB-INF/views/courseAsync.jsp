@@ -35,7 +35,7 @@
         </table>
     </div>
        
-    <script src="<c:url value='/static/js/app.js' />"></script>
+    <script src="/static/js/app.js"></script>
     <script src="<c:url value='/static/js/course_service.js' />"></script>
     <script src="<c:url value='/static/js/course_controller.js' />"></script>
   </body>

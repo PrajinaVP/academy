@@ -1,7 +1,5 @@
 package com.prajina.academy.model;
 
-import java.util.Objects;
-
 /**
  * This class represent the courses
  * 
@@ -14,7 +12,7 @@ import java.util.Objects;
  */
 public class Course {
 	// TODO move common fields to base class
-	private long id;
+	private Long id;
 	private String name;
 	private String desc;
 	private String status = "active";
@@ -25,7 +23,7 @@ public class Course {
 		super();
 	}
 
-	public Course(long id, String name, String desc, String status, String contact) {
+	public Course(Long id, String name, String desc, String status, String contact) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,11 +32,11 @@ public class Course {
 		this.contact = contact;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -75,26 +73,7 @@ public class Course {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(contact, desc, id, name, status);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Course other = (Course) obj;
-		return Objects.equals(contact, other.contact) && Objects.equals(desc, other.desc) && id == other.id
-				&& Objects.equals(name, other.name) && Objects.equals(status, other.status);
-	}
-
-	@Override
 	public String toString() {
-		return "Course [id=" + id + ", name=" + name + ", desc=" + desc + ", status=" + status + ", contact=" + contact
-				+ "]";
+		return "Course [id=" + id + ", name=" + name + ", desc=" + desc + ", status=" + status + "]";
 	}
 }

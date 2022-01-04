@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-  <body ng-app="myAcademyApp" class="ng-cloak">
+  <body>
    <jsp:include page="header.jsp"/>
     <h1>Course List</h1>  
-	<table border="2" width="70%" cellpadding="2">  
+	<table border="2" width="80%" cellpadding="2">  
 	  <tr>
 	    <th>Id</th>
 		<th>Name</th>
@@ -14,7 +14,7 @@
 		<th>Edit</th>
 		<th>Delete</th>
 	  </tr>  
-   	  <c:forEach var="course" items="${courses}">   
+   	  <c:forEach var="course" items="${courseList}">   
 	    <tr>  
 	       <td>${course.id}</td>  
 	       <td>${course.name}</td>  

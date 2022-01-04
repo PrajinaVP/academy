@@ -27,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Course findById(long id) {
+	public Course findById(Long id) {
 		for (Course course : courses) {
 			if (course.getId() == id) {
 				return course;
@@ -65,7 +65,7 @@ public class CourseServiceImpl implements CourseService {
 		if (course == null) {
 			throw new RuntimeException("No course provided!");
 		}
-		long id = counter.incrementAndGet();
+		Long id = counter.incrementAndGet();
 		course.setId(id);
 		courses.add(course);
 
@@ -109,7 +109,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void deleteById(long id) {
+	public void deleteById(Long id) {
 
 		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
 			Course course = iterator.next();

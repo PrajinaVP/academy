@@ -19,11 +19,11 @@ import com.prajina.academy.model.Course;
 import com.prajina.academy.service.CourseService;
 
 @RestController
-@RequestMapping("/rest/courses")
+@RequestMapping("/rest/course")
 public class CourseRestController {
 
 	@Autowired
-	CourseService courseService;
+	private CourseService courseService;
 
 	@GetMapping(value = "")
 	public ResponseEntity<?> listAllCourses() {
@@ -39,8 +39,8 @@ public class CourseRestController {
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/course/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Course> getCourse(@PathVariable("id") long id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Course> getCourse(@PathVariable("id") Long id) {
 		System.out.println("Fetching Course with id " + id);
 		Course course = courseService.findById(id);
 		if (course == null) {
@@ -50,7 +50,7 @@ public class CourseRestController {
 		return new ResponseEntity<Course>(course, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/course/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<Void> createCourse(@RequestBody Course course, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Course " + course.getName());
 
@@ -66,15 +66,16 @@ public class CourseRestController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/course/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+	public ResponseEntity<Course> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
 		System.out.println("Updating Course " + id);
 
 		Course currentCourse = courseService.findById(id);
 
 		if (currentCourse == null) {
 			System.out.println("Course with id " + id + " not found");
-			return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+			//TODO Replace with 200s OK or 500
+			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
 
 		// TODO Delete commented lines after confirming that PATCH works
@@ -90,8 +91,8 @@ public class CourseRestController {
 		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Course> deleteCourseById(@PathVariable("id") long id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Course> deleteCourseById(@PathVariable("id") Long id) {
 		System.out.println("Fetching & Deleting Course with id " + id);
 
 		Course course = courseService.findById(id);
@@ -104,7 +105,7 @@ public class CourseRestController {
 		return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 	}
 
-	@RequestMapping(value = "/course/", method = RequestMethod.DELETE)
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public ResponseEntity<Course> deleteAllCourses() {
 		System.out.println("Deleting All Courses");
 
