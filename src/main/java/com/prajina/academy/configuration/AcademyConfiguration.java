@@ -21,11 +21,6 @@ import org.springframework.web.servlet.view.JstlView;
 public class AcademyConfiguration implements WebMvcConfigurer {
 
 	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/index.jsp");
-	}
-
-	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
