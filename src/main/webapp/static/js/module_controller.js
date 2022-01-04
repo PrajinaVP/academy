@@ -16,6 +16,7 @@
 		vm.deleteModule = deleteModule;
 		vm.edit = edit;
 		vm.submit = submit;
+		vm.remove = remove;
 		vm.reset = reset;
 		
 		fetchAllModules();
@@ -35,7 +36,7 @@
     	}
 
  	  function createModule(module){
-		$log.debug('Create Modules  :: ', module);
+		$log.debug('Create Module  :: ', module);
         ModuleService.createModule(module)
             .then(
             fetchAllModules,
@@ -46,6 +47,7 @@
       }
  
     function updateModule(module, id){
+		$log.debug('Update Module  :: ', module);
         ModuleService.updateModule(module, id)
             .then(
             fetchAllModules(),
@@ -88,7 +90,7 @@
     }
  
     function remove(id){
-        $log.debug('id to be deleted', id);
+	    $log.debug('id to be deleted', id);
         if(vm.module.id === id) {
             reset();
         }
