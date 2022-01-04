@@ -2,6 +2,8 @@ package com.prajina.academy.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,41 +23,41 @@ import com.prajina.academy.service.CourseService;
 @RestController
 @RequestMapping("/rest/course")
 public class CourseRestController {
+	
+	Logger logger = LoggerFactory.getLogger(CourseRestController.class);
 
 	@Autowired
 	private CourseService courseService;
 
 	@GetMapping(value = "")
 	public ResponseEntity<?> listAllCourses() {
-		System.out.println("Rest GET");
+		logger.debug("Fetching all courses...");
 		List<Course> courses = courseService.findAll();
 
 		if (courses.isEmpty()) {
-			return new ResponseEntity<>("No Courses Found", HttpStatus.OK);
+			return new ResponseEntity<>("No Courses Found", HttpStatus.NO_CONTENT);
 		}
 
-		System.out.println("courses not empty :: " + courses);
-		System.out.println("response entity :: " + new ResponseEntity<List<Course>>(courses, HttpStatus.OK));
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> getCourse(@PathVariable("id") Long id) {
-		System.out.println("Fetching Course with id " + id);
+		logger.debug("Fetching Course with id " + id);
 		Course course = courseService.findById(id);
 		if (course == null) {
-			System.out.println("Course with id " + id + " not found");
-			return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+			logger.debug("Course with id " + id + " not found");
+			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Course>(course, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<Void> createCourse(@RequestBody Course course, UriComponentsBuilder ucBuilder) {
-		System.out.println("Creating Course " + course.getName());
+		logger.debug("Creating Course " + course.getName());
 
 		if (courseService.isCourseExist(course)) {
-			System.out.println("A Course with name " + course.getName() + " already exist");
+			logger.debug("A Course with name " + course.getName() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
@@ -65,40 +67,48 @@ public class CourseRestController {
 		headers.setLocation(ucBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Course> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
-		System.out.println("Updating Course " + id);
+		logger.debug("Updating Course " + id);
 
 		Course currentCourse = courseService.findById(id);
 
 		if (currentCourse == null) {
-			System.out.println("Course with id " + id + " not found");
-			//TODO Replace with 200s OK or 500
+			logger.debug("Course with id " + id + " not found");
+			
 			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
 
-		// TODO Delete commented lines after confirming that PATCH works
-		/*
-		 * currentCourse.setName(course.getName());
-		 * currentCourse.setDesc(course.getDesc());
-		 * currentCourse.setStatus(course.getStatus());
-		 * currentCourse.setContact(course.getContact());
-		 * 
-		 * courseService.updateCourse(currentCourse);
-		 */
+		Course updatedCourse = courseService.update(course);
+		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
+	}
+
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+	public ResponseEntity<Course> updatePartialCourse(@PathVariable("id") Long id, @RequestBody Course course) {
+		logger.debug("Partial pdating Course " + id);
+
+		Course currentCourse = courseService.findById(id);
+
+		if (currentCourse == null) {
+			logger.debug("Course with id " + id + " not found");
+		
+			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
+		}
+
 		Course updatedCourse = courseService.update(course);
 		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Course> deleteCourseById(@PathVariable("id") Long id) {
-		System.out.println("Fetching & Deleting Course with id " + id);
+		logger.debug("Fetching & Deleting Course with id " + id);
 
 		Course course = courseService.findById(id);
 		if (course == null) {
-			System.out.println("Unable to delete. Course with id " + id + " not found");
-			return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+			logger.debug("Unable to delete. Course with id " + id + " not found");
+			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
 
 		courseService.deleteById(id);
@@ -107,7 +117,7 @@ public class CourseRestController {
 
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public ResponseEntity<Course> deleteAllCourses() {
-		System.out.println("Deleting All Courses");
+		logger.debug("Deleting All Courses");
 
 		courseService.deleteAll();
 		List<Course> courses = courseService.findAll();

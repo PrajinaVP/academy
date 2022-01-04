@@ -34,7 +34,6 @@
 	        );
     	}
 
-
  	  function createModule(module){
 		$log.debug('Create Modules  :: ', module);
         ModuleService.createModule(module)
@@ -47,10 +46,6 @@
       }
  
     function updateModule(module, id){
-		console.log(`Update Modules  :: ${id} - ${JSON.stringify(module)})`);
-
-		$log.debug('Update Modules  :: ', `${id} - ${module})`);
-		$log.debug("\n === updatemoduel fn call \n " +  ModuleService.updateModule(module, id));
         ModuleService.updateModule(module, id)
             .then(
             fetchAllModules(),
@@ -72,7 +67,6 @@
     }
  
     function submit() {
-	console.log('Submit Modules  id ' + JSON.stringify(vm.module) + "\nid :: " + vm.module.id);
         if(vm.module.id===null){
             $log.debug('Saving New Module', vm.module);
             createModule(vm.module);
@@ -84,9 +78,6 @@
     }
  
     function edit(id){
-	console.log('id to be edited');
-		 $log.debug('log id to be edited');
-	 console.log('id to be edited' + id + "\n vm.modules :: " + JSON.stringify(vm.modules));
         $log.debug('id to be edited', id);
         for(var i = 0; i < vm.modules.length; i++){
             if(vm.modules[i].id === id) {

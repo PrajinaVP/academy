@@ -49,14 +49,27 @@
 	
 	    }
 	 
+	 	function updateModule(module, id) {
+		
+	         return $http.put(REST_SERVICE_URI+id, module)
+	            .then( function (response) {
+					$log.debug(`update module response :: ${JSON.stringify(response)}`);
+	                return response.data;
+	            },
+	            function(errResponse){
+	                 $log.error(`Error while creating Modules ${errResponse}`);
+					//optional error handling in UI
+	            }
+	        );
+	
+	    }
 	 
-	    function updateModule(module, id) {
+	    /*function updateModule(module, id) {
 			var deferred = $q.defer();
 	        $http.put(REST_SERVICE_URI+id, module)
 	            .then( function (response) {
 	                $log.debug(`update module response :: ${JSON.stringify(response)}`);
-					console.log(`update module response :: ${JSON.stringify(response)}`);
-	   
+				
 					deferred.resolve(response.data);
 	            },
 	            function(errResponse){
@@ -67,7 +80,7 @@
 	        );
 
 			return deferred.promise;	        
-	    }
+	    }*/
 	 
 	    function deleteModule(id) {
 	        

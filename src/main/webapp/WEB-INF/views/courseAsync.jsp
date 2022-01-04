@@ -2,15 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>List of Courses with AngularJS</title>
-    
- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
- <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-</head>
-<body ng-app="myApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>List of Courses with AngularJS</title>
+		    
+		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	</head>
+	<body ng-app="myApp">
 	<jsp:include page="header.jsp"/>
   	<div class="generic-container text-center" ng-controller="CourseController as ctrl">
        <table class="table table-hover table-striped" border=1>
