@@ -39,7 +39,9 @@
 		$log.debug('Create Module  :: ', module);
         ModuleService.createModule(module)
             .then(
-            fetchAllModules,
+			function(data) {
+				fetchAllModules();
+			},
             function(errResponse){
                 $log.error('Error while creating Modules :: \n' + errResponse);
             }
@@ -50,7 +52,9 @@
 		$log.debug('Update Module  :: ', module);
         ModuleService.updateModule(module, id)
             .then(
-            fetchAllModules(),
+			function(data) {
+				fetchAllModules();
+			},
             function(errResponse){
                 $log.error('Error while updating Module', JSON.stringify(errResponse));
             }
@@ -61,7 +65,9 @@
 		$log.debug('Deleting Modules  id ::', id);
         ModuleService.deleteModule(id)
             .then(
-            fetchAllModules,
+            function(data) {
+				fetchAllModules();
+			},
             function(errResponse){
                 $log.error('Error while deleting Module');
             }
@@ -102,5 +108,4 @@
         vm.module={id:null,name:'',desc:'',status:'', 'courseId': null};
     }
   }
-
 })();

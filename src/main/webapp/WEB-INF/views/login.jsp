@@ -8,7 +8,7 @@
 		<title>Prajina Academy</title>
 	</head>
 	<body>
-		<form:form name="submitForm" method="POST">
+		<form:form id="submitForm" name="submitForm" method="POST">
 			<div align="center">
 				<table>
 					<tr>
