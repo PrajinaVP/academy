@@ -27,6 +27,6 @@
 	  </c:forEach>   
     </table>  
    <br/>  
-   <a href="courseForm">Add New Course</a>  
+   <a href="/academy/course/courseForm">Add New Course</a>  
   </body>
 </html>

@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.prajina.academy.model.Login;
 
 @Controller
-@RequestMapping("/academy")
 public class LoginController {
 	
-	@GetMapping("")
+	@GetMapping("/")
 	public String init(Model model) {
+		
+		return "index";
+	}
+	
+	@GetMapping("/academy")
+	public String initAcademy(Model model) {
 		
 		return "index";
 	}

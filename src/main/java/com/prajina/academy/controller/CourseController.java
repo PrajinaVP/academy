@@ -41,10 +41,6 @@ public class CourseController {
 	@PostMapping("/save")
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("course") Course course) {
-		/*
-		 * if (course == null || course.getName().isEmpty()) { throw new
-		 * RuntimeException("Please provide course name"); }
-		 */
 		// TODO This should be save/ merge when db is set up
 		if (service.isCourseExist(course)) {
 			service.update(course);
@@ -61,7 +57,7 @@ public class CourseController {
 
 	@RequestMapping("/courseForm")
 	public String showform(Model m) {
-		m.addAttribute("course", new Course());
+		m.addAttribute("command", new Course());
 		return "courseForm";
 	}
 
