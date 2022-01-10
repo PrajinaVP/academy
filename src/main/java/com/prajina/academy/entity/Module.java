@@ -1,9 +1,19 @@
-package com.prajina.academy.model;
+package com.prajina.academy.entity;
 
 import java.util.Objects;
 
-public class Module {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table
+public class Module {
+	
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String name;
 	private String desc;

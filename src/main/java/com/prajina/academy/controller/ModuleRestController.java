@@ -56,16 +56,16 @@ public class ModuleRestController {
 	public ResponseEntity<?> createModule(@RequestBody Module module, UriComponentsBuilder ucBuilder) {
 		logger.debug("Creating Module " + module.getName());
 
-		if (moduleService.isModuleExist(module)) {
+		if (module.getId() != null && moduleService.isModuleExist(module)) {
 			logger.debug("A Module with name " + module.getName() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
-		moduleService.create(module);
+		moduleService.save(module);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/module/{id}").buildAndExpand(module.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(ucBuilder.path("/module/{id}").buildAndExpand(module.getId()).toUri());
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -79,7 +79,8 @@ public class ModuleRestController {
 			return new ResponseEntity<>("No Module Found with id " + id, HttpStatus.NO_CONTENT);
 		}
 		
-		Module updatedModule = moduleService.update(module);
+		moduleService.save(module);
+		Module updatedModule = moduleService.findById(id);
 
 		return new ResponseEntity<Module>(updatedModule, HttpStatus.OK);
 	}
@@ -95,7 +96,8 @@ public class ModuleRestController {
 			return new ResponseEntity<>("No Module Found with id " + id, HttpStatus.NO_CONTENT);
 		}
 		
-		Module updatedModule = moduleService.update(module);
+		moduleService.save(module);
+		Module updatedModule = moduleService.findById(id);
 	
 		return new ResponseEntity<Module>(updatedModule, HttpStatus.OK);
 	}
@@ -112,20 +114,6 @@ public class ModuleRestController {
 
 		moduleService.deleteById(id);
 		return new ResponseEntity<Module>(HttpStatus.NO_CONTENT);
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteAllModules() {
-		logger.debug("Deleting All Modules");
-
-		moduleService.deleteAll();
-		List<Module> modules = moduleService.findAll();
-		if (modules == null || modules.isEmpty()) {
-			return new ResponseEntity<Module>(HttpStatus.NO_CONTENT);
-		}
-
-		// TODO Throw custom exception
-		return new ResponseEntity<Module>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

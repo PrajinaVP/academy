@@ -14,17 +14,11 @@ public interface CourseService {
 
 	List<Course> findByDesc(String desc);
 
-	Course create(Course course);
+	void save(Course course);
 
-	List<Course> create(List<Course> course);
-
-	Course update(Course course);
-
-	void updateCourse(List<Course> course);
+	void save(List<Course> course);
 
 	void deleteCourse(List<Course> courseList);
-
-	void deleteAll();
 
 	void deleteById(Long id);
 
