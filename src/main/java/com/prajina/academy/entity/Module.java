@@ -2,10 +2,12 @@ package com.prajina.academy.entity;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +15,11 @@ import javax.persistence.Table;
 public class Module {
 	
 	@Id
-	@GeneratedValue
+	// IDENTITY strategy is not supported in H2 db. Hence, using sequence. Auto was using the same sequence across all entities.
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_module_id")
+	@SequenceGenerator(name = "seq_module_id", allocationSize = 1)
 	private Long id;
+	@Column(unique=true)
 	private String name;
 	private String desc;
 	private Long courseId; // Can a module be part of multiple courses?

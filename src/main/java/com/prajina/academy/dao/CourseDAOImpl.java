@@ -18,20 +18,19 @@ public class CourseDAOImpl extends AbstractDAO implements CourseDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> findAll() {
-		Session currentSession = getSession();
-		CriteriaBuilder criteriaBuilder = currentSession.getCriteriaBuilder();
-		CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
-		Root<Course> root = criteriaQuery.from(Course.class);
-		criteriaQuery.select(root);
-		
-		Query query = currentSession.createQuery(criteriaQuery);
-		
-		return query.getResultList();
+		String hql = "FROM Course c";
+		// Uses hibernate query (not javax.persistence.Query)
+		return getSession().createQuery(hql).getResultList();
 	}
 
 	@Override
 	public Course findById(Long id) {
-		Course course = getSession().get(Course.class, id);
+		Course course = null;
+		String hql = "FROM Course where id = :id";
+		
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", id);
+		course = (Course) query.getSingleResult();
 		
 		return course;
 	}
