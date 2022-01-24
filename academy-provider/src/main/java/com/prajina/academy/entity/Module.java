@@ -33,7 +33,7 @@ public class Module implements Serializable {
 	String description;
 	@Column(name="CONTACT", length=50)
 	String contact;
-	@Column(name="VERSION", length=5)
+	@Column(name="VERSION", nullable=false, length=5)
 	String version;
 	@Column(columnDefinition = "varchar(15) not null default 'active'")
 	String status;
