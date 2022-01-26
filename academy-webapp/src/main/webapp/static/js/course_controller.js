@@ -18,6 +18,8 @@
 		vm.submit = submit;
 		vm.remove = remove;
 		vm.reset = reset;
+		vm.modules = [];
+		vm.selectedModules = [];
 		
 		fetchAllCourses();
 

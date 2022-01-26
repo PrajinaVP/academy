@@ -53,15 +53,10 @@ public class CourseRestController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<Void> createCourse(@RequestBody Course course, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createCourse(@RequestBody Course course, UriComponentsBuilder ucBuilder) {
 		logger.debug("Creating Course " + course.getName());
 
-		courseService.save(course);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri());
-		
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		return courseService.save(course);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

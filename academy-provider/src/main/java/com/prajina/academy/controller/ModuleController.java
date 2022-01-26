@@ -5,6 +5,7 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,8 @@ public class ModuleController {
 	@PostMapping
 	public ResponseEntity<?> addModule(@RequestBody Module module) {
 		Module savedModule = service.save(module);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedModule.getId()).toUri();
 		
-		return ResponseEntity.created(location).build();
+		return new ResponseEntity<>(savedModule, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
@@ -49,7 +48,7 @@ public class ModuleController {
 			@RequestBody Module module) {
 		Module updatedModule = service.update(id, module);
 		
-		return ResponseEntity.ok(updatedModule);
+		return new ResponseEntity<>(updatedModule, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")

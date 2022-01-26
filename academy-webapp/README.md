@@ -85,5 +85,5 @@ https://www.journaldev.com/17096/spring-resttemplate-example
 https://howtodoinjava.com/spring-boot2/resttemplate/spring-restful-client-resttemplate-example/
 https://reflectoring.io/spring-resttemplate/
 
-
+http://www.dotnetawesome.com/2015/12/multiselect-dropdown-with-checkbox-in-angularjs.html
 

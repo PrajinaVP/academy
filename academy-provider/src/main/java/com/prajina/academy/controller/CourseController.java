@@ -5,6 +5,7 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.prajina.academy.model.Course;
+import com.prajina.academy.model.Module;
 import com.prajina.academy.service.CourseService;
 
 @RestController
@@ -39,10 +41,7 @@ public class CourseController {
 	public ResponseEntity<?> addCourse(@RequestBody Course course) {
 		Course savedCourse = service.save(course);
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedCourse.getId()).toUri();
-		
-		return ResponseEntity.created(location).build();
+		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
@@ -50,7 +49,7 @@ public class CourseController {
 			@RequestBody Course course) {
 		Course savedCourse = service.update(id, course);
 		
-		return ResponseEntity.ok(savedCourse);
+		return new ResponseEntity<>(savedCourse, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -63,7 +62,7 @@ public class CourseController {
 			@PathVariable(value="moduleId", required=true) Long moduleId) {
 		Course savedCourse = service.addModule(id, moduleId);
 		
-		return ResponseEntity.ok(savedCourse);
+		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{courseId}/module/remove/{moduleId}")

@@ -94,7 +94,12 @@
                               </div>
                           </div>
                       </div>
- 
+					  <div class="form-group">
+		                 <label>Subscribe for categories : </label>
+		                 @* Directive *@
+		                 <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" 
+		                     options="Categories" selected-model="CategoriesSelected" checkboxes="true"></div>
+		              </div>
                       <div class="row">
                           <div class="form-actions floatRight">
                               <input type="submit"  value="{{ctrl.course.id ? 'Update' : 'Add'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
