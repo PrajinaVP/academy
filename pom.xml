@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.prajina.academy</groupId>
+  <artifactId>PrajinaAcademy</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Prajina Academy</name>
+  <description>Prajina Academy - Bootstrapped Learning</description>
+  <packaging>war</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <spring.version>5.2.1.RELEASE</spring.version>
+  </properties>
+  
+  <dependencies>
+  	<!-- JSTL Dependency -->
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+	<!--Servlet-Api -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency> 
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.3</version>
+      <scope>provided</scope>
+   	</dependency>
+    <!-- Spring Framework -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+	<!-- Jackson JSON Mapper -->
+	<dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.13.1</version>
+	</dependency>
+	<!--  Logging  -->
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-simple</artifactId>
+	  <version>1.7.32</version>
+	</dependency>
+	<!-- Hibernate Core -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.3.5.Final</version>
+    </dependency>
+    <!-- Hibernate Validator -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.4.1.Final</version>
+    </dependency>
+    <!--  spring-orm module provides integration with Hibernate -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <!-- H2 Database -->
+	<dependency>
+	    <groupId>com.h2database</groupId>
+	    <artifactId>h2</artifactId>
+	    <version>2.0.206</version>
+	    <scope>runtime</scope>
+	</dependency>
+	<!-- Model mapper -->
+	<dependency>
+	  <groupId>org.modelmapper</groupId>
+	  <artifactId>modelmapper</artifactId>
+	  <version>2.4.4</version>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <finalName>PrajinaAcademy</finalName>
+    <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
+      <plugins>
+      	<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.2</version>
+          <configuration>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-war-plugin</artifactId>
+           <version>3.2.2</version>
+           <configuration>
+               <warSourceDirectory>src/main/webapp</warSourceDirectory>
+               <warName>PrajinaAcademy</warName>
+               <failOnMissingWebXml>false</failOnMissingWebXml>
+           </configuration>   
+        </plugin>
+        <plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.14.v20181114</version>
+				<configuration>
+					<httpConnector>
+						<port>${servlet.port}</port>
+					</httpConnector>
+					<stopKey>quit</stopKey>
+					<stopPort>${jetty.stop.port}</stopPort>
+					<webApp>
+						<contextPath>/</contextPath>
+					</webApp>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<scanTargetPatterns>
+						<scanTargetPattern>
+							<directory>src/main/webapp/WEB-INF</directory>
+							<includes>
+								<include>**/*.jsp</include>
+							</includes>
+							<excludes>
+								<include>**/*.properties</include>
+							</excludes>
+						</scanTargetPattern>
+					</scanTargetPatterns>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-it</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-it</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+       </plugins>
+    </pluginManagement>		
+  </build>
+</project>
