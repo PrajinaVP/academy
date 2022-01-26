@@ -43,7 +43,7 @@
 				fetchAllModules();
 			},
             function(errResponse){
-                $log.error('Error while creating Modules :: \n' + errResponse);
+                $log.error('Error while creating Modules :: \n' + JSON.stringify(errResponse));
             }
         );
       }

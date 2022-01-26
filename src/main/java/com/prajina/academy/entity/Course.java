@@ -1,17 +1,23 @@
-package com.prajina.academy.model;
+package com.prajina.academy.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * This class represent the courses
- * 
- * @author Prajina
+ * @author prajina.purayil
  *
  */
+@Entity
 public class Course {
-	// TODO move common fields to base class
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
+	@Column(unique=true)
 	private String name;
 	private String desc;
 	private String status = "active";

@@ -1,142 +1,88 @@
 package com.prajina.academy.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.prajina.academy.dao.CourseDAO;
 import com.prajina.academy.model.Course;
+import com.prajina.academy.transformer.CourseMapper;
 
 @Service("CourseService")
 public class CourseServiceImpl implements CourseService {
 
-	private static final AtomicLong counter = new AtomicLong();
-
-	// TODO Read from xls file
-	private static List<Course> courses;
-
-	static {
-		courses = getCourses();
-	}
+	@Autowired
+	private CourseDAO dao;
+	
+	@Autowired
+	private CourseMapper mapper;
 
 	@Override
+	@Transactional
 	public List<Course> findAll() {
-		return courses;
+		return mapper.toModel(dao.findAll());
 	}
 
 	@Override
+	@Transactional
 	public Course findById(Long id) {
-		for (Course course : courses) {
-			if (course.getId() == id) {
-				return course;
-			}
-		}
-		return null;
+		return mapper.toModel(dao.findById(id));
 	}
 
 	@Override
+	@Transactional
 	public Course findByName(String name) {
-		for (Course course : courses) {
-			if (course.getName().equalsIgnoreCase(name)) {
-				return course;
-			}
-		}
-
-		return null;
+		return mapper.toModel(dao.findByName(name));
 	}
 
 	@Override
+	@Transactional
 	public List<Course> findByDesc(String desc) {
-		List courseContainingDesc = new ArrayList();
-
-		for (Course course : courses) {
-			if (course.getDesc().contains(desc)) {
-				courseContainingDesc.add(course);
-			}
-		}
-
-		return courseContainingDesc;
+		return mapper.toModel(dao.findByDesc(desc));
 	}
 
 	@Override
-	public Course create(Course course) {
-		if (course == null) {
-			throw new RuntimeException("No course provided!");
-		}
-		Long id = counter.incrementAndGet();
-		course.setId(id);
-		courses.add(course);
-
-		return courses.get(courses.indexOf(course));
+	@Transactional
+	public void save(Course course) {
+		dao.save(mapper.toEntity(course));
 	}
 
 	@Override
-	public List<Course> create(List<Course> courseList) {
+	@Transactional
+	public void save(List<Course> courseList) {
 		if (courseList == null) {
 			throw new RuntimeException("No course provided!");
 		}
 
 		for (Course course : courseList) {
-			course.setId(counter.incrementAndGet());
-			courses.add(course);
-		}
-
-		return courses;
-	}
-
-	@Override
-	public Course update(Course course) {
-		int index = courses.indexOf(course);
-		courses.set(index, course);
-
-		return courses.get(index);
-	}
-
-	@Override
-	public void updateCourse(List<Course> courseList) {
-		for (Course course : courses) {
-			int index = courses.indexOf(course);
-			courses.set(index, course);
+			save(course);
 		}
 	}
 
 	@Override
-	public void deleteCourse(List<Course> courseList) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
+	@Transactional
 	public void deleteById(Long id) {
+		dao.delete(id);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteCourse(List<Course> courseList) {
+		if (courseList == null) {
+			throw new RuntimeException("No course provided!");
+		}
 
-		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
-			Course course = iterator.next();
-			if (course.getId() == id) {
-				iterator.remove();
-			}
+		for (Course course : courseList) {
+			deleteById(course.getId());
 		}
 	}
 
 	@Override
-	public void deleteAll() {
-		courses.clear();
-	}
-
-	@Override
+	@Transactional
 	public boolean isCourseExist(Course course) {
 
 		return findById(course.getId()) != null;
-	}
-
-	private static List<Course> getCourses() {
-		List<Course> courses = new ArrayList<Course>();
-		courses.add(new Course(counter.incrementAndGet(), "Java", "Java", "active", "java@contact.praj"));
-		courses.add(new Course(counter.incrementAndGet(), "Advanced Java", "Basic Java Constructs", "inactive",
-				"advjava@contact.praj"));
-		courses.add(new Course(counter.incrementAndGet(), "Angular", "Angular JS", "active", "ajs@contact.praj"));
-
-		return courses;
 	}
 }

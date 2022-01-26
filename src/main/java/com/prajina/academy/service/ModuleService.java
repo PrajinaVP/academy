@@ -14,19 +14,13 @@ public interface ModuleService {
 
 	List<Module> findByDesc(String desc);
 
-	Module create(Module module);
+	void save(Module module);
 
-	List<Module> create(List<Module> module);
-
-	Module update(Module module);
-
-	void updateModule(List<Module> module);
+	void save(List<Module> module);
+	
+	void deleteById(Long id);
 
 	void deleteModule(List<Module> moduleList);
-
-	void deleteAll();
-
-	void deleteById(Long id);
 
 	boolean isModuleExist(Module module);
 
