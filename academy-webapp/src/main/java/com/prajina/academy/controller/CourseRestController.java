@@ -60,15 +60,15 @@ public class CourseRestController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri());
+		
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
 		logger.debug("Updating Course " + id);
-		System.out.println("rest Updating Course " + id);
 		ResponseEntity<Course> responseEntity = courseService.update(id, course);
-		System.out.println("rest Updating Course responseEntity :: " + responseEntity.toString());
+		
 		return responseEntity;
 	}
 

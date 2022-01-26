@@ -31,7 +31,6 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public ResponseEntity<Course[]> findAll(Integer pageNum, Integer pageSize, String sortBy) {
 		String requestUri = getRequestUri(pageNum, pageSize, sortBy);
-		System.out.println("COURSE SERVICE IMPL requestUri :: " + requestUri);
 		Map<String, String> urlParameters = new HashMap<>();
 		urlParameters.put("pageNum", Integer.toString(pageNum));
 		urlParameters.put("pageSize", Integer.toString(pageSize));
@@ -102,12 +101,11 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public ResponseEntity<Course> save(Course course) {
-System.out.println(" ui svc impl :: course :: "+ course);
 		if (course == null) {
 			throw new RuntimeException("No course provided!");
 		}
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-		System.out.println(" ui svc impl :: requestUri :: "+ requestUri);
+		
 		return restTemplate.postForEntity(requestUri, course, Course.class);
 	}
 
@@ -126,13 +124,12 @@ System.out.println(" ui svc impl :: course :: "+ course);
 	@Override
 	public ResponseEntity<Course> update(Long id, Course course) {
 		logger.debug("Updating Course id :: " + id + "  course :: " +course.toString());
-		System.out.println("svc BACK Updating Course id :: " + id + "  course :: " +course.toString());
 		if (course == null || course.getId() == null) {
 			throw new RuntimeException("No course provided for update!");
 		}
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
 		logger.debug("Updating Course requestUri " + requestUri);
-		System.out.println("svc BACK Updating Course requestUri " + requestUri);
+		
 		return restTemplate.exchange(requestUri + "/{id}",
                 HttpMethod.PUT,
                 new HttpEntity<>(course),

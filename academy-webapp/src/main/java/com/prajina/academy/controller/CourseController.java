@@ -40,11 +40,8 @@ public class CourseController {
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all courses... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
 				+ sortBy);
-		System.out.println(" \n UI course ctrl get Course  pageNum :: " + pageNum + ", pageSize :: " + pageSize
-				+ ", sortBy :: " + sortBy);
 		ResponseEntity<Course[]> responseEntity = service.findAll(pageNum, pageSize, sortBy);
 		ModelAndView mav = new ModelAndView("courseAngularTag");
-		System.out.println(" responseEntity.getBody() :: " + responseEntity.getBody());
 		mav.addObject("courseList", responseEntity.getBody());
 
 		return mav;
@@ -57,11 +54,8 @@ public class CourseController {
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all courses... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
 				+ sortBy);
-		System.out.println(" \n UI course ctrl get Course  pageNum :: " + pageNum + ", pageSize :: " + pageSize
-				+ ", sortBy :: " + sortBy);
 		ResponseEntity<Course[]> responseEntity = service.findAll(pageNum, pageSize, sortBy);
 		ModelAndView mav = new ModelAndView("course");
-		System.out.println(" responseEntity.getBody() :: " + responseEntity.getBody());
 		mav.addObject("courseList", responseEntity.getBody());
 
 		return mav;
@@ -70,9 +64,7 @@ public class CourseController {
 	@PostMapping("/save")
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("course") Course course) {
-		System.out.println(" \n UI course ctrl course :: " + course.toString());
 		service.save(course);
-		System.out.println(" \n UI course ctrl AFTER save :: " + course.toString());
 		ModelAndView mav = getCourses(request, response, 0, 100, null);
 
 		return mav;

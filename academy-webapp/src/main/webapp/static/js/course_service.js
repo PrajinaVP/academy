@@ -3,9 +3,9 @@
 	angular.module('myApp')
 		.factory('CourseService', CourseService);
 		
-	CourseService.$inject = ['$http', '$log'];
+	CourseService.$inject = ['$http', '$q', '$log'];
 	
-	function CourseService($http, $log) {
+	function CourseService($http, $q, $log) {
 		var REST_SERVICE_URI = 'http://localhost:8080/course/'; 
 		
 		var service = {
@@ -18,18 +18,20 @@
 		return service;
 		
 		function fetchAllCourses() {
-	  console.log(`service fetchAllCourses data`);
-	      return $http.get(REST_SERVICE_URI)
+	 
+	      return $http.get(`${REST_SERVICE_URI}`)
 	            .then( function (response) {
 					$log.debug(`service data :: ${JSON.stringify(response)}`);
-	   console.log(`service fetchAllCourses data :: ${JSON.stringify(response)}`);
+	   
 					return response.data;
 	            },
 	            function(errResponse){
-	                $log.error(`course_service :: Error while fetching Courses ${JSON.stringify(errResponse)}`);
+	                $log.error(`Error while fetching Courses ${errResponse}`);
 					//optional error handling in UI
 	            }
-	        );  
+	        );
+
+	       
 	    }
 	 
 	 	function createCourse(course) {
@@ -37,7 +39,7 @@
 	        return $http.post(REST_SERVICE_URI, course)
 	            .then( function (response) {
 					$log.debug(`create course response :: ${JSON.stringify(response)}`);
-	                return response.data;
+					return response.data;
 	            },
 	            function(errResponse){
 	                 $log.error(`Error while creating Courses ${JSON.stringify(errResponse)}`);
@@ -47,23 +49,18 @@
 	
 	    }
 	 
-	 
-	    function updateCourse(id, course) {
-	        console.log('course svc Updating Course  id ::', id);
-	        $http.put(REST_SERVICE_URI+id, course)
+	 	function updateCourse(id, course) {
+			return $http.put(REST_SERVICE_URI+id, course)
 	            .then( function (response) {
-	                $log.debug(`update course response :: ${JSON.stringify(response)}`);
-console.log(`update course response :: ${JSON.stringify(response)}`);
-	   
-	   
-					return response.data;
+					$log.debug(`update course response :: ${JSON.stringify(response)}`);
+	                return response.data;
 	            },
 	            function(errResponse){
 	                 $log.error(`Error while updating Courses ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
 	        );
-	        
+	
 	    }
 	 
 	    function deleteCourse(id) {
@@ -75,12 +72,11 @@ console.log(`update course response :: ${JSON.stringify(response)}`);
 					return response.data;
 	            },
 	            function(errResponse){
-	                 $log.error(`Error while deleting Courses ${JSON.stringify(errResponse)}`);
+	                 $log.error(`Error while deleting Courses ${errResponse}`);
 					//optional error handling in UI
 	            }
 	        );
 	        
 	    }
-
     }		
 })();

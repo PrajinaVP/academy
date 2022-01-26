@@ -35,7 +35,6 @@
 	        );
     	}
 
-
  		function createCourse(course){
 		$log.debug('Create Course  :: ', course);
         CourseService.createCourse(course)
@@ -49,12 +48,12 @@
         );
       }
  
-    function updateCourse(course, id){
+    function updateCourse(id, course){
 		$log.debug('Updating Course  id ::', id);
-        CourseService.updateCourse(id, course)
+		CourseService.updateCourse(id, course)
             .then(
 			function(data) {
-				fetchAllCourse();
+				fetchAllCourses();
 			},
             function(errResponse){
                 $log.error('Error while updating Module', JSON.stringify(errResponse));
@@ -80,7 +79,7 @@
             $log.debug('Saving New Course', vm.course);
             createCourse(vm.course);
         }else{
-            updateCourse(vm.course, vm.course.id);
+            updateCourse(vm.course.id, vm.course);
             $log.debug('Course updated with id ', vm.course.id);
         }
         reset();
@@ -98,7 +97,6 @@
  
     function remove(id){
 	    $log.debug('id to be deleted', id);
-console.log('id to be deleted', id);
         if(vm.course.id === id) {
             reset();
         }
