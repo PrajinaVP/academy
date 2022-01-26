@@ -1,7 +1,5 @@
 package com.prajina.academy.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ import com.prajina.academy.model.Course;
 import com.prajina.academy.service.CourseService;
 
 @RestController
-@RequestMapping("/rest/course")
+@RequestMapping("/course")
 public class CourseRestController {
 	
 	Logger logger = LoggerFactory.getLogger(CourseRestController.class);
@@ -30,12 +28,12 @@ public class CourseRestController {
 	@Autowired
 	private CourseService courseService;
 	
-	@GetMapping(value = "/all")
+	@GetMapping(value = "")
 	public ResponseEntity<?> listAllCourses(
 			@RequestParam(required = false, defaultValue="0") Integer pageNum,
 			@RequestParam(required = false, defaultValue="100") Integer pageSize,
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
-		logger.error("Fetching all courses... pageNum :: " + pageNum +", pageSize :: " + pageSize + ", sortBy :: " + sortBy);
+		logger.error("REST CTRL COURSE Fetching all courses... pageNum :: " + pageNum +", pageSize :: " + pageSize + ", sortBy :: " + sortBy);
 		logger.debug("Fetching all courses...");
 		ResponseEntity<Course[]> responseEntity = courseService.findAll(pageNum, pageSize, sortBy);
 		
@@ -68,8 +66,10 @@ public class CourseRestController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
 		logger.debug("Updating Course " + id);
-		
-		return courseService.update(id, course);
+		System.out.println("rest Updating Course " + id);
+		ResponseEntity<Course> responseEntity = courseService.update(id, course);
+		System.out.println("rest Updating Course responseEntity :: " + responseEntity.toString());
+		return responseEntity;
 	}
 
 

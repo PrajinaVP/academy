@@ -27,6 +27,6 @@ spring:
         storage_engine: innodb
         show-sql: true   
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       generate-ddl: true
       show-sql: true              

@@ -39,6 +39,7 @@
 	        return $http.post(REST_SERVICE_URI, module)
 	            .then( function (response) {
 					$log.debug(`create module response :: ${JSON.stringify(response)}`);
+					console.log(`update module response :: ${JSON.stringify(response)}`);
 	                return response.data;
 	            },
 	            function(errResponse){

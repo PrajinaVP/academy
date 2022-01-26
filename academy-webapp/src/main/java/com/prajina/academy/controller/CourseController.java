@@ -1,7 +1,5 @@
 package com.prajina.academy.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +24,7 @@ import com.prajina.academy.service.CourseService;
 public class CourseController {
 
 	Logger logger = LoggerFactory.getLogger(CourseController.class);
-	
+
 	@Autowired
 	private CourseService service;
 
@@ -37,14 +35,33 @@ public class CourseController {
 
 	@GetMapping("")
 	public ModelAndView getCourses(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(required = false, defaultValue="0") Integer pageNum,
-			@RequestParam(required = false, defaultValue="30") Integer pageSize,
+			@RequestParam(required = false, defaultValue = "0") Integer pageNum,
+			@RequestParam(required = false, defaultValue = "30") Integer pageSize,
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
-		logger.error("Fetching all courses... pageNum :: " + pageNum +", pageSize :: " + pageSize + ", sortBy :: " + sortBy);
-		logger.debug("Fetching all courses...");
-		
+		logger.debug("Fetching all courses... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
+				+ sortBy);
+		System.out.println(" \n UI course ctrl get Course  pageNum :: " + pageNum + ", pageSize :: " + pageSize
+				+ ", sortBy :: " + sortBy);
+		ResponseEntity<Course[]> responseEntity = service.findAll(pageNum, pageSize, sortBy);
+		ModelAndView mav = new ModelAndView("courseAngularTag");
+		System.out.println(" responseEntity.getBody() :: " + responseEntity.getBody());
+		mav.addObject("courseList", responseEntity.getBody());
+
+		return mav;
+	}
+
+	@GetMapping("/sync")
+	public ModelAndView getCoursesSync(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = false, defaultValue = "0") Integer pageNum,
+			@RequestParam(required = false, defaultValue = "30") Integer pageSize,
+			@RequestParam(required = false, defaultValue = "name") String sortBy) {
+		logger.debug("Fetching all courses... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
+				+ sortBy);
+		System.out.println(" \n UI course ctrl get Course  pageNum :: " + pageNum + ", pageSize :: " + pageSize
+				+ ", sortBy :: " + sortBy);
 		ResponseEntity<Course[]> responseEntity = service.findAll(pageNum, pageSize, sortBy);
 		ModelAndView mav = new ModelAndView("course");
+		System.out.println(" responseEntity.getBody() :: " + responseEntity.getBody());
 		mav.addObject("courseList", responseEntity.getBody());
 
 		return mav;
@@ -53,14 +70,10 @@ public class CourseController {
 	@PostMapping("/save")
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("course") Course course) {
-		
+		System.out.println(" \n UI course ctrl course :: " + course.toString());
 		service.save(course);
-		
-		// Use default values
-		ModelAndView mav = getCourses(request, response, null, null, null);
-//		List<Course> courses = service.findAll();
-//		ModelAndView mav = new ModelAndView("course");
-//		mav.addObject("courseList", courses);
+		System.out.println(" \n UI course ctrl AFTER save :: " + course.toString());
+		ModelAndView mav = getCourses(request, response, 0, 100, null);
 
 		return mav;
 	}

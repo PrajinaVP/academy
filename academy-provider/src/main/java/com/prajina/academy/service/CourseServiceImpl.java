@@ -66,11 +66,13 @@ public class CourseServiceImpl implements CourseService{
 		if (course == null) {
 			throw new RuntimeException("No course provided to update!");
 		}
-		course.setId(id);
+		
+		System.out.println("PROVIDER SVC UPDATE id :: " + id + "\n course :: " + course);
+		//course.setId(id);
 		
 		Optional<com.prajina.academy.entity.Course> courseFromDB = Optional.ofNullable(repository.findById(id))
 				.orElseThrow(() -> new RuntimeException("Course with id " + id + " not found!" ));
-
+		System.out.println("PROVIDER SVC UPDATE courseFromDB :: " + courseFromDB);
 		com.prajina.academy.entity.Course courseToUpdate = courseFromDB.get();
 		courseToUpdate.setName(course.getName());
 		courseToUpdate.setDescription(course.getDescription());
@@ -78,7 +80,7 @@ public class CourseServiceImpl implements CourseService{
 		courseToUpdate.setVersion(course.getVersion());
 		courseToUpdate.setStatus(course.getStatus());
 		courseToUpdate.setModules(moduleMapper.toEntity(course.getModules()));
-		
+		System.out.println("PROVIDER SVC UPDATE courseToUpdate :: " + courseToUpdate);
 		return mapper.toModel(repository.save(courseToUpdate));
 	}
 	

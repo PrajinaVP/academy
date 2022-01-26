@@ -8,7 +8,7 @@
 	
 	function ModuleController(ModuleService, $log) {
 		var vm = this;
-		vm.module = {id: null, name: '', description: '',status: '', courseId: null };
+		vm.module = {id: null, name: '', description: '',status: ''};
 		vm.modules = [];
 		vm.fetchAllModules = fetchAllModules;
 		vm.createModule = createModule;
@@ -105,7 +105,7 @@
  
  
     function reset(){
-        vm.module={id:null,name:'',description:'',status:'', 'courseId': null};
+        vm.module={id:null,name:'',description:'',status:''};
     }
   }
 })();

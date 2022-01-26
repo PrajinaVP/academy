@@ -6,7 +6,7 @@
 	CourseService.$inject = ['$http', '$log'];
 	
 	function CourseService($http, $log) {
-		var REST_SERVICE_URI = 'http://localhost:8080/rest/course'; 
+		var REST_SERVICE_URI = 'http://localhost:8080/course/'; 
 		
 		var service = {
 	        fetchAllCourses: fetchAllCourses,
@@ -18,20 +18,18 @@
 		return service;
 		
 		function fetchAllCourses() {
-	 
+	  console.log(`service fetchAllCourses data`);
 	      return $http.get(REST_SERVICE_URI)
 	            .then( function (response) {
 					$log.debug(`service data :: ${JSON.stringify(response)}`);
-	   
+	   console.log(`service fetchAllCourses data :: ${JSON.stringify(response)}`);
 					return response.data;
 	            },
 	            function(errResponse){
-	                $log.error(`Error while fetching Courses ${errResponse}`);
+	                $log.error(`course_service :: Error while fetching Courses ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
-	        );
-
-	       
+	        );  
 	    }
 	 
 	 	function createCourse(course) {
@@ -42,7 +40,7 @@
 	                return response.data;
 	            },
 	            function(errResponse){
-	                 $log.error(`Error while creating Courses ${errResponse}`);
+	                 $log.error(`Error while creating Courses ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
 	        );
@@ -50,16 +48,18 @@
 	    }
 	 
 	 
-	    function updateCourse(course, id) {
-	        
+	    function updateCourse(id, course) {
+	        console.log('course svc Updating Course  id ::', id);
 	        $http.put(REST_SERVICE_URI+id, course)
 	            .then( function (response) {
 	                $log.debug(`update course response :: ${JSON.stringify(response)}`);
+console.log(`update course response :: ${JSON.stringify(response)}`);
+	   
 	   
 					return response.data;
 	            },
 	            function(errResponse){
-	                 $log.error(`Error while updating Courses ${errResponse}`);
+	                 $log.error(`Error while updating Courses ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
 	        );
@@ -75,7 +75,7 @@
 					return response.data;
 	            },
 	            function(errResponse){
-	                 $log.error(`Error while deleting Courses ${errResponse}`);
+	                 $log.error(`Error while deleting Courses ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
 	        );

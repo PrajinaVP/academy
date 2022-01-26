@@ -11,6 +11,7 @@
 		<th>Description</th>
 		<th>Status</th>
 		<th>Contact</th>
+		<th>Module</th>
 		<th>Edit</th>
 		<th>Delete</th>
 	  </tr>  
@@ -21,6 +22,7 @@
 	       <td>${course.description}</td>  
 	       <td>${course.status}</td> 
 	       <td>${course.contact}</td>
+	       <td>${course.modules}</td> 
 	       <td><a href="edit/${course.id}">Edit</a></td>  
 	       <td><a href="delete/${course.id}">Delete</a></td>  
 	    </tr>  

@@ -12,14 +12,18 @@
   <tr>    
    <td>Description :</td>    
    <td><form:input path="description" /></td>  
+  </tr>  
+  <tr>    
+   <td>Version :</td>    
+   <td><form:input path="version" /></td>  
   </tr>   
   <tr>    
    <td>Status :</td>    
-   <td><input path="status" /></td>  
+   <td><form:input path="status" /></td>  
   </tr>   
     <tr>    
    <td>Contact :</td>    
-   <td><input path="contact" /></td>  
+   <td><form:input path="contact" /></td>  
   </tr> 
   <tr>    
    <td> </td>    
