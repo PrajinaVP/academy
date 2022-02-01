@@ -9,28 +9,28 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.prajina.academy.model.Module;
+import com.prajina.academy.model.ModuleView;
 
 @Component
 public class ModuleMapper {
 	
 	private ModelMapper mapper = new ModelMapper();
 	
-	public Module toModel(com.prajina.academy.entity.Module entity) {
-		return mapper.map(entity, Module.class);
+	public ModuleView toModel(com.prajina.academy.entity.ModuleImpl entity) {
+		return mapper.map(entity, ModuleView.class);
 	}
 	
-	public List<Module> toModel(List<com.prajina.academy.entity.Module> entityList) {
+	public List<ModuleView> toModel(List<com.prajina.academy.entity.ModuleImpl> entityList) {
 		return entityList.stream()
 				.map(item -> toModel(item))
 				.collect(Collectors.toList());
 	}
 	
-	public com.prajina.academy.entity.Module toEntity(Module model) {
-		return mapper.map(model, com.prajina.academy.entity.Module.class);
+	public com.prajina.academy.entity.ModuleImpl toEntity(ModuleView model) {
+		return mapper.map(model, com.prajina.academy.entity.ModuleImpl.class);
 	}
 
-	public Set<com.prajina.academy.entity.Module> toEntity(Set<Module> moduleSet) {
+	public Set<com.prajina.academy.entity.ModuleImpl> toEntity(Set<ModuleView> moduleSet) {
 		return moduleSet.stream()
 				.map(item -> toEntity(item))
 				.collect(Collectors.toSet());

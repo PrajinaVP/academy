@@ -1,7 +1,5 @@
 package com.prajina.academy.controller;
 
-import java.net.URI;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.prajina.academy.model.Course;
-import com.prajina.academy.model.Module;
+import com.prajina.academy.api.Course;
+import com.prajina.academy.model.CourseView;
 import com.prajina.academy.service.CourseService;
 
 @RestController
@@ -38,16 +35,18 @@ public class CourseController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> addCourse(@RequestBody Course course) {
-		Course savedCourse = service.save(course);
+	public ResponseEntity<?> addCourse(@RequestBody CourseView course) {
+		System.out.println("Provider Controller addCourse course :: " + course);
+		CourseView savedCourse = (CourseView) service.save(course);
+		System.out.println("Provider Controller SAVED savedCourse :: " + savedCourse);
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCourse(@Valid @PathVariable(value="id", required=true) Long id,
-			@RequestBody Course course) {
-		Course savedCourse = service.update(id, course);
+			@RequestBody CourseView course) {
+		CourseView savedCourse = (CourseView) service.update(id, course);
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.OK);
 	}

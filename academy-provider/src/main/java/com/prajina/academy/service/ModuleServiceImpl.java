@@ -11,7 +11,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.prajina.academy.model.Module;
+import com.google.common.collect.ImmutableList;
+import com.prajina.academy.api.Module;
+import com.prajina.academy.entity.ModuleImpl;
 import com.prajina.academy.repository.ModuleRepository;
 import com.prajina.academy.transformer.ModuleMapper;
 
@@ -28,9 +30,9 @@ public class ModuleServiceImpl implements ModuleService{
 	@Override
 	public List<Module> findAll(Integer pageNum, Integer size, String sortBy) {
 		Pageable page = PageRequest.of(pageNum, size, Sort.by(sortBy));
-		Page<com.prajina.academy.entity.Module> pagedModule = repository.findAll(page);
+		Page<ModuleImpl> pagedModule = repository.findAll(page);
 		
-		return mapper.toModel(pagedModule.getContent());
+		return ImmutableList.copyOf(pagedModule.getContent());
 	}
 	
 	@Override
@@ -39,7 +41,7 @@ public class ModuleServiceImpl implements ModuleService{
 			throw new RuntimeException("No module provided to save!");
 		}
 		
-		return mapper.toModel(repository.save(mapper.toEntity(module)));
+		return repository.save(ModuleImpl.convert(module));
 	}
 	
 	@Override
@@ -51,17 +53,17 @@ public class ModuleServiceImpl implements ModuleService{
 			throw new RuntimeException("No module provided to update!");
 		}
 		
-		Optional<com.prajina.academy.entity.Module> moduleFromDB = Optional.ofNullable(repository.findById(id))
+		Optional<ModuleImpl> moduleFromDB = Optional.ofNullable(repository.findById(id))
 				.orElseThrow(() -> new RuntimeException("Module with id " + id + " not found!" ));
 		
-		com.prajina.academy.entity.Module moduleToUpdate = moduleFromDB.get();
+		ModuleImpl moduleToUpdate = moduleFromDB.get();
 		moduleToUpdate.setName(module.getName());
 		moduleToUpdate.setDescription(module.getDescription());
 		moduleToUpdate.setContact(module.getContact());
 		moduleToUpdate.setVersion(module.getVersion());
 		moduleToUpdate.setStatus(module.getStatus());
 		
-		return mapper.toModel(repository.save(moduleToUpdate));
+		return repository.save(moduleToUpdate);
 	}
 	
 	@Override

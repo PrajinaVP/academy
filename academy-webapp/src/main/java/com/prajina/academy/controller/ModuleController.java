@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.prajina.academy.model.Module;
+import com.prajina.academy.model.ModuleView;
 import com.prajina.academy.service.ModuleService;
 
 @RestController
@@ -38,7 +38,7 @@ public class ModuleController {
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all modules... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
 				+ sortBy);
-		ResponseEntity<Module[]> responseEntity = moduleService.findAll(pageNum, pageSize, sortBy);
+		ResponseEntity<ModuleView[]> responseEntity = moduleService.findAll(pageNum, pageSize, sortBy);
 		ModelAndView mav = new ModelAndView("module");
 		mav.addObject("moduleList", responseEntity.getBody());
 
@@ -52,14 +52,14 @@ public class ModuleController {
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all modules... pageNum :: " + pageNum +", pageSize :: " + pageSize + ", sortBy :: " + sortBy);
 		
-		ResponseEntity<Module[]> responseEntity = moduleService.findAll(pageNum, pageSize, sortBy);
+		ResponseEntity<ModuleView[]> responseEntity = moduleService.findAll(pageNum, pageSize, sortBy);
 		return responseEntity;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getModule(@PathVariable("id") Long id) {
 		logger.debug("Fetching Module with id " + id);
-		ResponseEntity<Module> response = moduleService.findById(id);
+		ResponseEntity<ModuleView> response = moduleService.findById(id);
 		if (response == null || response.getBody() == null) {
 			logger.debug("Module with id " + id + " not found");
 			return new ResponseEntity<>("No Module Found with id " + id, HttpStatus.NO_CONTENT);
@@ -69,21 +69,21 @@ public class ModuleController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<?> createModule(@RequestBody Module module, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createModule(@RequestBody ModuleView module, UriComponentsBuilder ucBuilder) {
 		logger.debug("Creating Module " + module.getName());
 
 		return moduleService.save(module);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateModule(@PathVariable("id") Long id, @RequestBody Module module) {
+	public ResponseEntity<?> updateModule(@PathVariable("id") Long id, @RequestBody ModuleView module) {
 		logger.debug("Updating Module " + id);
 		
 		return moduleService.update(id, module);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<?> partialUpdateModule(@PathVariable("id") Long id, @RequestBody Module module) {
+	public ResponseEntity<?> partialUpdateModule(@PathVariable("id") Long id, @RequestBody ModuleView module) {
 		logger.debug("Updating Partial Module " + id + "\n module :: " + module);
 		return moduleService.patch(id, module);
 	}

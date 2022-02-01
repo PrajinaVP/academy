@@ -4,33 +4,33 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.prajina.academy.model.Course;
+import com.prajina.academy.model.CourseView;
 
 public interface CourseService {
 
-	ResponseEntity<Course[]> findAll(Integer pageNum, Integer pageSize, String sortBy);
+	ResponseEntity<CourseView[]> findAll(Integer pageNum, Integer pageSize, String sortBy);
 	
-	ResponseEntity<Course> findById(Long id);
+	ResponseEntity<CourseView> findById(Long id);
 
-	ResponseEntity<Course> findByName(String name);
+	ResponseEntity<CourseView> findByName(String name);
 
-	ResponseEntity<Course> findByDesc(String description);
+	ResponseEntity<CourseView> findByDesc(String description);
 
-	ResponseEntity<Course> save(Course course);
+	ResponseEntity<CourseView> save(CourseView course);
 
-	void save(List<Course> course);
+	void save(List<CourseView> course);
 	
-	ResponseEntity<Course> update(Long id, Course course);
+	ResponseEntity<CourseView> update(Long id, CourseView course);
 	
-	ResponseEntity<Course> patch(Long id, Course course);
+	ResponseEntity<CourseView> patch(Long id, CourseView course);
 	
 	void deleteById(Long id);
 
-	void deleteCourse(List<Course> courseList);
+	void deleteCourse(List<CourseView> courseList);
 	
 	ResponseEntity<Void> deleteWithExchange(Long id);
 
-	boolean isCourseExist(Course course);
+	boolean isCourseExist(CourseView course);
 
 	
 

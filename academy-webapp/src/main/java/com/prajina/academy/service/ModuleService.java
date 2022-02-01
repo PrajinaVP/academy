@@ -4,33 +4,33 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.prajina.academy.model.Module;
+import com.prajina.academy.model.ModuleView;
 
 public interface ModuleService {
 
-	ResponseEntity<Module[]> findAll(Integer pageNum, Integer pageSize, String sortBy);
+	ResponseEntity<ModuleView[]> findAll(Integer pageNum, Integer pageSize, String sortBy);
 	
-	ResponseEntity<Module> findById(Long id);
+	ResponseEntity<ModuleView> findById(Long id);
 
-	ResponseEntity<Module> findByName(String name);
+	ResponseEntity<ModuleView> findByName(String name);
 
-	ResponseEntity<Module> findByDesc(String description);
+	ResponseEntity<ModuleView> findByDesc(String description);
 
-	ResponseEntity<Module> save(Module module);
+	ResponseEntity<ModuleView> save(ModuleView module);
 
-	void save(List<Module> module);
+	void save(List<ModuleView> module);
 	
-	ResponseEntity<Module> update(Long id, Module module);
+	ResponseEntity<ModuleView> update(Long id, ModuleView module);
 	
-	ResponseEntity<Module> patch(Long id, Module module);
+	ResponseEntity<ModuleView> patch(Long id, ModuleView module);
 	
 	void deleteById(Long id);
 
-	void deleteModule(List<Module> moduleList);
+	void deleteModule(List<ModuleView> moduleList);
 	
 	ResponseEntity<Void> deleteWithExchange(Long id);
 
-	boolean isModuleExist(Module module);
+	boolean isModuleExist(ModuleView module);
 
 	
 

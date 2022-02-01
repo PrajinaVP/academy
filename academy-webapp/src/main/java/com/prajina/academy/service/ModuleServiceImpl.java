@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.prajina.academy.model.Module;
+import com.prajina.academy.model.ModuleView;
 
 @Service
 public class ModuleServiceImpl implements ModuleService {
@@ -29,7 +29,7 @@ public class ModuleServiceImpl implements ModuleService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public ResponseEntity<Module[]> findAll(Integer pageNum, Integer pageSize, String sortBy) {
+	public ResponseEntity<ModuleView[]> findAll(Integer pageNum, Integer pageSize, String sortBy) {
 		String requestUri = getRequestUri(pageNum, pageSize, sortBy);
 		
 		Map<String, String> urlParameters = new HashMap<>();
@@ -37,8 +37,8 @@ public class ModuleServiceImpl implements ModuleService {
 		urlParameters.put("pageSize", Integer.toString(pageSize));
 		urlParameters.put("sortBy", sortBy);
 		  
-		ResponseEntity<Module[]> responseEntity = restTemplate.getForEntity(requestUri,
-		                                                                Module[].class,
+		ResponseEntity<ModuleView[]> responseEntity = restTemplate.getForEntity(requestUri,
+		                                                                ModuleView[].class,
 		                                                                urlParameters);
 	
 		return responseEntity;
@@ -77,53 +77,53 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 
 	@Override
-	public ResponseEntity<Module> findById(Long id) {
+	public ResponseEntity<ModuleView> findById(Long id) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Module> responseEntity = restTemplate.getForEntity(requestUri+"/{id}", Module.class, Long.toString(id));
+        ResponseEntity<ModuleView> responseEntity = restTemplate.getForEntity(requestUri+"/{id}", ModuleView.class, Long.toString(id));
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Module> findByName(String name) {
+	public ResponseEntity<ModuleView> findByName(String name) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Module> responseEntity = restTemplate.getForEntity(requestUri+"?name={name}", Module.class, name);
+        ResponseEntity<ModuleView> responseEntity = restTemplate.getForEntity(requestUri+"?name={name}", ModuleView.class, name);
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Module> findByDesc(String description) {
+	public ResponseEntity<ModuleView> findByDesc(String description) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Module> responseEntity = restTemplate.getForEntity(requestUri+"?description={description}", Module.class, description);
+        ResponseEntity<ModuleView> responseEntity = restTemplate.getForEntity(requestUri+"?description={description}", ModuleView.class, description);
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Module> save(Module module) {
+	public ResponseEntity<ModuleView> save(ModuleView module) {
 		if (module == null) {
 			throw new RuntimeException("No module provided!");
 		}
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
 		
-		return restTemplate.postForEntity(requestUri, module, Module.class);
+		return restTemplate.postForEntity(requestUri, module, ModuleView.class);
 	}
 
 	// TODO Use saveAll
 	@Override
-	public void save(List<Module> moduleList) {
+	public void save(List<ModuleView> moduleList) {
 		if (moduleList == null) {
 			throw new RuntimeException("No module provided for save!");
 		}
 
-		for (Module module : moduleList) {
+		for (ModuleView module : moduleList) {
 			save(module);
 		}
 	}
 	
 	@Override
-	public ResponseEntity<Module> update(Long id, Module module) {
+	public ResponseEntity<ModuleView> update(Long id, ModuleView module) {
 		if (module == null || module.getId() == null) {
 			throw new RuntimeException("No module provided for update!");
 		}
@@ -131,12 +131,12 @@ public class ModuleServiceImpl implements ModuleService {
 		return restTemplate.exchange(requestUri + "/{id}",
                 HttpMethod.PUT,
                 new HttpEntity<>(module),
-                Module.class,
+                ModuleView.class,
                 Long.toString(id));
 	}
 	
 	@Override
-	public ResponseEntity<Module> patch(Long id, Module module) {
+	public ResponseEntity<ModuleView> patch(Long id, ModuleView module) {
 		if (module == null || module.getId() == null) {
 			throw new RuntimeException("No module provided for update!");
 		}
@@ -144,7 +144,7 @@ public class ModuleServiceImpl implements ModuleService {
 		return restTemplate.exchange(requestUri + "/{id}",
                 HttpMethod.PATCH,
                 new HttpEntity<>(module),
-                Module.class,
+                ModuleView.class,
                 Long.toString(id));
 	}
 
@@ -155,12 +155,12 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 
 	@Override
-	public void deleteModule(List<Module> moduleList) {
+	public void deleteModule(List<ModuleView> moduleList) {
 		if (moduleList == null) {
 			throw new RuntimeException("No course provided!");
 		}
 
-		for (Module module : moduleList) {
+		for (ModuleView module : moduleList) {
 			deleteById(module.getId());
 		}
 	}
@@ -176,7 +176,7 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 	// TODO Remove as not used?
 	@Override
-	public boolean isModuleExist(Module module) {
+	public boolean isModuleExist(ModuleView module) {
 
 		return module != null && module.getId() != null && findById(module.getId()) != null;
 	}

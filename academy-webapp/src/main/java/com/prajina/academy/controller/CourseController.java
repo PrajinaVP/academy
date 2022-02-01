@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.prajina.academy.model.Course;
+import com.prajina.academy.model.CourseView;
 import com.prajina.academy.service.CourseService;
 
 @RestController
@@ -39,7 +39,7 @@ public class CourseController {
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all courses... pageNum :: " + pageNum + ", pageSize :: " + pageSize + ", sortBy :: "
 				+ sortBy);
-		ResponseEntity<Course[]> responseEntity = courseService.findAll(pageNum, pageSize, sortBy);
+		ResponseEntity<CourseView[]> responseEntity = courseService.findAll(pageNum, pageSize, sortBy);
 		ModelAndView mav = new ModelAndView("course");
 		mav.addObject("courseList", responseEntity.getBody());
 
@@ -52,41 +52,41 @@ public class CourseController {
 			@RequestParam(required = false, defaultValue="100") Integer pageSize,
 			@RequestParam(required = false, defaultValue = "name") String sortBy) {
 		logger.debug("Fetching all courses... pageNum :: " + pageNum +", pageSize :: " + pageSize + ", sortBy :: " + sortBy);
-		ResponseEntity<Course[]> responseEntity = courseService.findAll(pageNum, pageSize, sortBy);
+		ResponseEntity<CourseView[]> responseEntity = courseService.findAll(pageNum, pageSize, sortBy);
 		
 		return responseEntity;
 	}
 
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Course> getCourse(@PathVariable("id") Long id) {
+	public ResponseEntity<CourseView> getCourse(@PathVariable("id") Long id) {
 		logger.debug("Fetching Course with id " + id);
-		ResponseEntity<Course> responseEntity = courseService.findById(id);
+		ResponseEntity<CourseView> responseEntity = courseService.findById(id);
 		if (responseEntity == null) {
 			logger.debug("Course with id " + id + " not found");
-			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<CourseView>(HttpStatus.NO_CONTENT);
 		}
 		return responseEntity;
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<?> createCourse(@RequestBody Course course, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createCourse(@RequestBody CourseView course, UriComponentsBuilder ucBuilder) {
 		logger.debug("Creating Course " + course.getName());
 
 		return courseService.save(course);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
+	public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody CourseView course) {
 		logger.debug("Updating Course " + id);
-		ResponseEntity<Course> responseEntity = courseService.update(id, course);
+		ResponseEntity<CourseView> responseEntity = courseService.update(id, course);
 		
 		return responseEntity;
 	}
 
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<Course> updatePartialCourse(@PathVariable("id") Long id, @RequestBody Course course) {
+	public ResponseEntity<CourseView> updatePartialCourse(@PathVariable("id") Long id, @RequestBody CourseView course) {
 		logger.debug("Partial pdating Course " + id);
 
 		return courseService.patch(id, course);

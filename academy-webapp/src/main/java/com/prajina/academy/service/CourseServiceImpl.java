@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.prajina.academy.model.Course;
+import com.prajina.academy.model.CourseView;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -29,15 +29,15 @@ public class CourseServiceImpl implements CourseService {
 	private RestTemplate restTemplate;
 
 	@Override
-	public ResponseEntity<Course[]> findAll(Integer pageNum, Integer pageSize, String sortBy) {
+	public ResponseEntity<CourseView[]> findAll(Integer pageNum, Integer pageSize, String sortBy) {
 		String requestUri = getRequestUri(pageNum, pageSize, sortBy);
 		Map<String, String> urlParameters = new HashMap<>();
 		urlParameters.put("pageNum", Integer.toString(pageNum));
 		urlParameters.put("pageSize", Integer.toString(pageSize));
 		urlParameters.put("sortBy", sortBy);
 		  
-		ResponseEntity<Course[]> responseEntity = restTemplate.getForEntity(requestUri,
-		                                                                Course[].class,
+		ResponseEntity<CourseView[]> responseEntity = restTemplate.getForEntity(requestUri,
+		                                                                CourseView[].class,
 		                                                                urlParameters);
 	
 		return responseEntity;
@@ -76,53 +76,53 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public ResponseEntity<Course> findById(Long id) {
+	public ResponseEntity<CourseView> findById(Long id) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Course> responseEntity = restTemplate.getForEntity(requestUri+"/{id}", Course.class, Long.toString(id));
+        ResponseEntity<CourseView> responseEntity = restTemplate.getForEntity(requestUri+"/{id}", CourseView.class, Long.toString(id));
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Course> findByName(String name) {
+	public ResponseEntity<CourseView> findByName(String name) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Course> responseEntity = restTemplate.getForEntity(requestUri+"?name={name}", Course.class, name);
+        ResponseEntity<CourseView> responseEntity = restTemplate.getForEntity(requestUri+"?name={name}", CourseView.class, name);
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Course> findByDesc(String description) {
+	public ResponseEntity<CourseView> findByDesc(String description) {
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
-        ResponseEntity<Course> responseEntity = restTemplate.getForEntity(requestUri+"?description={description}", Course.class, description);
+        ResponseEntity<CourseView> responseEntity = restTemplate.getForEntity(requestUri+"?description={description}", CourseView.class, description);
         
         return responseEntity;
 	}
 
 	@Override
-	public ResponseEntity<Course> save(Course course) {
+	public ResponseEntity<CourseView> save(CourseView course) {
 		if (course == null) {
 			throw new RuntimeException("No course provided!");
 		}
 		String requestUri = serviceBaseUrl + RESOURCE_URI;
 		
-		return restTemplate.postForEntity(requestUri, course, Course.class);
+		return restTemplate.postForEntity(requestUri, course, CourseView.class);
 	}
 
 	// TODO Use saveAll
 	@Override
-	public void save(List<Course> courseList) {
+	public void save(List<CourseView> courseList) {
 		if (courseList == null) {
 			throw new RuntimeException("No course provided for save!");
 		}
 
-		for (Course course : courseList) {
+		for (CourseView course : courseList) {
 			save(course);
 		}
 	}
 	
 	@Override
-	public ResponseEntity<Course> update(Long id, Course course) {
+	public ResponseEntity<CourseView> update(Long id, CourseView course) {
 		logger.debug("Updating Course id :: " + id + "  course :: " +course.toString());
 		if (course == null || course.getId() == null) {
 			throw new RuntimeException("No course provided for update!");
@@ -133,12 +133,12 @@ public class CourseServiceImpl implements CourseService {
 		return restTemplate.exchange(requestUri + "/{id}",
                 HttpMethod.PUT,
                 new HttpEntity<>(course),
-                Course.class,
+                CourseView.class,
                 Long.toString(id));
 	}
 	
 	@Override
-	public ResponseEntity<Course> patch(Long id, Course course) {
+	public ResponseEntity<CourseView> patch(Long id, CourseView course) {
 		if (course == null || course.getId() == null) {
 			throw new RuntimeException("No course provided for update!");
 		}
@@ -146,7 +146,7 @@ public class CourseServiceImpl implements CourseService {
 		return restTemplate.exchange(requestUri + "/{id}",
                 HttpMethod.PATCH,
                 new HttpEntity<>(course),
-                Course.class,
+                CourseView.class,
                 Long.toString(id));
 	}
 
@@ -157,12 +157,12 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void deleteCourse(List<Course> courseList) {
+	public void deleteCourse(List<CourseView> courseList) {
 		if (courseList == null) {
 			throw new RuntimeException("No course provided!");
 		}
 
-		for (Course course : courseList) {
+		for (CourseView course : courseList) {
 			deleteById(course.getId());
 		}
 	}
@@ -178,7 +178,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 	// TODO Remove as not used?
 	@Override
-	public boolean isCourseExist(Course course) {
+	public boolean isCourseExist(CourseView course) {
 
 		return course != null && course.getId() != null && findById(course.getId()) != null;
 	}

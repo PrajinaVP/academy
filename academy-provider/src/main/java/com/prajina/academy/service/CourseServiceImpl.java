@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prajina.academy.model.Module;
-import com.prajina.academy.model.Course;
+import com.google.common.collect.ImmutableList;
+import com.prajina.academy.model.ModuleView;
+import com.prajina.academy.api.Course;
+import com.prajina.academy.entity.CourseImpl;
 import com.prajina.academy.repository.CourseRepository;
 import com.prajina.academy.repository.ModuleRepository;
 import com.prajina.academy.transformer.CourseMapper;
@@ -44,22 +46,28 @@ public class CourseServiceImpl implements CourseService{
 	public List<Course> findAll(Integer pageNum, Integer size, String sortBy) {
 		
 		Pageable page = PageRequest.of(pageNum, size, Sort.by(sortBy));
-		Page<com.prajina.academy.entity.Course> pagedCourse = repository.findAll(page);
+		Page<CourseImpl> pagedCourse = repository.findAll(page);
 		
-		return mapper.toModel(pagedCourse.getContent());
+		return ImmutableList.copyOf(pagedCourse.getContent());
 	}
 	
 	@Override
 	public Course save(Course course) {
+		System.out.println("Provider SERVICE save course :: " + course);
+		
 		if (course == null) {
 			throw new RuntimeException("No course provided to save!");
 		}
 		
-		return mapper.toModel(repository.save(mapper.toEntity(course)));
+		System.out.println("\nProvider SERVICE addCourse CourseImpl.convert(course) :: \n" + new CourseImpl(course));
+		
+		return repository.save(CourseImpl.convert(course));
 	}
 	
 	@Override
 	public Course update(Long id, Course course) {
+		System.out.println("Provider SERVICE update course :: " + course);
+		
 		if (id == null) {
 			throw new RuntimeException("No course id provided to update!");
 		}
@@ -67,17 +75,17 @@ public class CourseServiceImpl implements CourseService{
 			throw new RuntimeException("No course provided to update!");
 		}
 		
-		Optional<com.prajina.academy.entity.Course> courseFromDB = Optional.ofNullable(repository.findById(id))
+		Optional<CourseImpl> courseFromDB = Optional.ofNullable(repository.findById(id))
 				.orElseThrow(() -> new RuntimeException("Course with id " + id + " not found!" ));
-		com.prajina.academy.entity.Course courseToUpdate = courseFromDB.get();
+		CourseImpl courseToUpdate = courseFromDB.get();
 		courseToUpdate.setName(course.getName());
 		courseToUpdate.setDescription(course.getDescription());
 		courseToUpdate.setContact(course.getContact());
 		courseToUpdate.setVersion(course.getVersion());
 		courseToUpdate.setStatus(course.getStatus());
-		courseToUpdate.setModules(moduleMapper.toEntity(course.getModules()));
+		courseToUpdate.setModules(course.getModules());
 		
-		return mapper.toModel(repository.save(courseToUpdate));
+		return repository.save(courseToUpdate);
 	}
 	
 	@Override
@@ -96,16 +104,16 @@ public class CourseServiceImpl implements CourseService{
 		if (moduleId == null) {
 			throw new RuntimeException("No module provided to update!");
 		}
-		Optional<com.prajina.academy.entity.Course> courseFromDB = Optional.ofNullable(repository.findById(courseId))
+		Optional<CourseImpl> courseFromDB = Optional.ofNullable(repository.findById(courseId))
 				.orElseThrow(() -> new RuntimeException("Course with id " + courseId + " not found!" ));
 
-		Optional<com.prajina.academy.entity.Module> moduleFromDB = Optional.ofNullable(moduleRepository.findById(moduleId))
+		Optional<com.prajina.academy.entity.ModuleImpl> moduleFromDB = Optional.ofNullable(moduleRepository.findById(moduleId))
 				.orElseThrow(() -> new RuntimeException("Module with id " + moduleId + " not found!" ));
 		
-		com.prajina.academy.entity.Course courseToUpdate = courseFromDB.get();
+		CourseImpl courseToUpdate = courseFromDB.get();
 		courseToUpdate.getModules().add(moduleFromDB.get());
 		
-		return mapper.toModel(repository.save(courseToUpdate));
+		return repository.save(courseToUpdate);
 	}
 	
 	@Override
@@ -117,13 +125,13 @@ public class CourseServiceImpl implements CourseService{
 			throw new RuntimeException("No module id provided to update!");
 		}
 		
-		Optional<com.prajina.academy.entity.Course> courseFromDB = Optional.ofNullable(repository.findById(courseId))
+		Optional<CourseImpl> courseFromDB = Optional.ofNullable(repository.findById(courseId))
 				.orElseThrow(() -> new RuntimeException("Course with id " + courseId + " not found!" ));
 
 		
-		com.prajina.academy.entity.Course courseToUpdate = courseFromDB.get();
+		CourseImpl courseToUpdate = courseFromDB.get();
 		courseToUpdate.getModules().removeIf(module -> module.getId() == moduleId);
 		
-		return mapper.toModel(repository.save(courseToUpdate));
+		return repository.save(courseToUpdate);
 	}
 }

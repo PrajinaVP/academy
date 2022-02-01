@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Module {
+public class ModuleView {
 	Long id;
 	String name;
 	String description;
@@ -15,7 +15,7 @@ public class Module {
 	String version;
 	String status;
 	@JsonIgnore
-	private Set<Course> courses = new HashSet<>();
+	private Set<CourseView> courses = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -47,10 +47,10 @@ public class Module {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public Set<Course> getCourses() {
+	public Set<CourseView> getCourses() {
 		return courses;
 	}
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(Set<CourseView> courses) {
 		this.courses = courses;
 	}
 	
@@ -65,5 +65,6 @@ public class Module {
 	public String toString() {
 		return "Module [id=" + id + ", name=" + name + ", description=" + description + ", contact=" + contact
 				+ ", version=" + version + ", status=" + status + "]";
-	}	
+	}
+	
 }

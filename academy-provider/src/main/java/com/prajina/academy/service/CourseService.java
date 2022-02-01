@@ -2,18 +2,18 @@ package com.prajina.academy.service;
 
 import java.util.List;
 
-import com.prajina.academy.model.Course;
+import com.prajina.academy.api.Course;
 
 
 public interface CourseService {
 	
-	public List<Course> findAll(Integer pageNum, Integer size, String sortBy);
+	 List<Course> findAll(Integer pageNum, Integer size, String sortBy);
 	
-	public Course save(Course course);
+	 Course save(Course course);
 	
-	public Course update(Long id, Course course);
-	public void deleteById(Long id);
+	 Course update(Long id, Course course);
+	 void deleteById(Long id);
 	
-	public Course addModule(Long courseId, Long moduleId);
-	public Course removeModule(Long courseId, Long moduleId);
+	 Course addModule(Long courseId, Long moduleId);
+	 Course removeModule(Long courseId, Long moduleId);
 }
