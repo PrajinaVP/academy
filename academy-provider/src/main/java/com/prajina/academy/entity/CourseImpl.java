@@ -3,6 +3,7 @@ package com.prajina.academy.entity;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,9 +20,11 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.ImmutableSet;
 import com.prajina.academy.api.Course;
 import com.prajina.academy.api.Module;
+import com.prajina.academy.model.ModuleView;
 
 
 @Entity
@@ -47,6 +50,7 @@ public class CourseImpl implements Course, Serializable {
 	@Column(name="STATUS", columnDefinition = "varchar(15) not null default 'draft'")
 	String status;
 	
+	@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "COURSE_MODULE",
         joinColumns = {
@@ -57,32 +61,23 @@ public class CourseImpl implements Course, Serializable {
 
 	CourseImpl() {	}
 
-	public CourseImpl(Course course){
-		BeanUtils.copyProperties(course,  null, CourseImpl.class);
+    public CourseImpl(Course course){
+		BeanUtils.copyProperties(course, this, CourseImpl.class);
 	}
 	
 	public static CourseImpl convert(Course course) {
-		System.out.println("Provider course IMPL CONVERT course :: " + course);
-		
 		if (course == null) {
-			System.out.println("Provider course if null IMPL CONVERT course :: ");
-			
 			return null;
 		}
 		if(course instanceof CourseImpl) {
-			System.out.println("Provider course if instance IMPL CONVERT course :: ");
 			CourseImpl courseImpl = (CourseImpl) course;
-			System.out.println("Provider course IMPL CONVERT courseImpl :: " + courseImpl);
 			
 			return courseImpl;
 		}
-		System.out.println("Provider course after ifs IMPL CONVERT course :: ");
 		
 		return new CourseImpl(course);
 		
 	}
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -129,11 +124,7 @@ public class CourseImpl implements Course, Serializable {
 	}
 
 	public void setModules(Set<Module> modules) {
-		Set<ModuleImpl> moduleImpls = new HashSet<>();
-		for (Module module: moduleImpls) {
-			moduleImpls.add((ModuleImpl) module);
-		}
-		this.modules = moduleImpls; 
+		this.modules = modules.stream().map(ModuleImpl::convert).collect(Collectors.toSet()); 	
 	}
 	
 	public String getStatus() {

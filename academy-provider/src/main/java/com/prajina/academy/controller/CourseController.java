@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prajina.academy.api.Course;
 import com.prajina.academy.model.CourseView;
 import com.prajina.academy.service.CourseService;
 
@@ -36,9 +35,7 @@ public class CourseController {
 	
 	@PostMapping
 	public ResponseEntity<?> addCourse(@RequestBody CourseView course) {
-		System.out.println("Provider Controller addCourse course :: " + course);
-		CourseView savedCourse = (CourseView) service.save(course);
-		System.out.println("Provider Controller SAVED savedCourse :: " + savedCourse);
+		CourseView savedCourse = CourseView.convert(service.save(course));
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}
@@ -46,7 +43,7 @@ public class CourseController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCourse(@Valid @PathVariable(value="id", required=true) Long id,
 			@RequestBody CourseView course) {
-		CourseView savedCourse = (CourseView) service.update(id, course);
+		CourseView savedCourse = CourseView.convert(service.update(id, course));
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.OK);
 	}
@@ -59,7 +56,7 @@ public class CourseController {
 	@PutMapping("/{courseId}/module/add/{moduleId}")
 	public ResponseEntity<?> addModule(@Valid @PathVariable(value="courseId", required=true) Long id,
 			@PathVariable(value="moduleId", required=true) Long moduleId) {
-		Course savedCourse = service.addModule(id, moduleId);
+		CourseView savedCourse =  CourseView.convert(service.addModule(id, moduleId));
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}
@@ -67,7 +64,7 @@ public class CourseController {
 	@PutMapping("/{courseId}/module/remove/{moduleId}")
 	public ResponseEntity<?> removeModule(@Valid @PathVariable(value="courseId", required=true) Long id,
 			@PathVariable(value="moduleId", required=true) Long moduleId) {
-		Course savedCourse = service.removeModule(id, moduleId);
+		CourseView savedCourse =  CourseView.convert(service.removeModule(id, moduleId));
 		
 		return ResponseEntity.ok(savedCourse);
 	}

@@ -1,6 +1,5 @@
 package com.prajina.academy.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,16 +11,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
-import com.prajina.academy.model.ModuleView;
 import com.prajina.academy.api.Course;
 import com.prajina.academy.entity.CourseImpl;
 import com.prajina.academy.repository.CourseRepository;
 import com.prajina.academy.repository.ModuleRepository;
-import com.prajina.academy.transformer.CourseMapper;
-import com.prajina.academy.transformer.ModuleMapper;
 
 @Service
 @Transactional
@@ -32,12 +27,6 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Autowired
 	private ModuleRepository moduleRepository;
-	
-	@Autowired
-	private CourseMapper mapper;
-	
-	@Autowired
-	private ModuleMapper moduleMapper;
 	
 	@Autowired
 	ObjectMapper objMapper;
@@ -53,21 +42,15 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Override
 	public Course save(Course course) {
-		System.out.println("Provider SERVICE save course :: " + course);
-		
 		if (course == null) {
 			throw new RuntimeException("No course provided to save!");
 		}
-		
-		System.out.println("\nProvider SERVICE addCourse CourseImpl.convert(course) :: \n" + new CourseImpl(course));
 		
 		return repository.save(CourseImpl.convert(course));
 	}
 	
 	@Override
 	public Course update(Long id, Course course) {
-		System.out.println("Provider SERVICE update course :: " + course);
-		
 		if (id == null) {
 			throw new RuntimeException("No course id provided to update!");
 		}
@@ -77,6 +60,7 @@ public class CourseServiceImpl implements CourseService{
 		
 		Optional<CourseImpl> courseFromDB = Optional.ofNullable(repository.findById(id))
 				.orElseThrow(() -> new RuntimeException("Course with id " + id + " not found!" ));
+		
 		CourseImpl courseToUpdate = courseFromDB.get();
 		courseToUpdate.setName(course.getName());
 		courseToUpdate.setDescription(course.getDescription());

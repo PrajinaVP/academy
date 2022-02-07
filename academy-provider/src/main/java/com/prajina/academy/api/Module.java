@@ -4,7 +4,6 @@ import java.util.Set;
 
 public interface Module {
 	
-	
 	 Long getId();
 	 void setId(Long id);
 	 String getName();

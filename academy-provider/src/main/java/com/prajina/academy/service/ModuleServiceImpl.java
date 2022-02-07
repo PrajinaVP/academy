@@ -15,7 +15,6 @@ import com.google.common.collect.ImmutableList;
 import com.prajina.academy.api.Module;
 import com.prajina.academy.entity.ModuleImpl;
 import com.prajina.academy.repository.ModuleRepository;
-import com.prajina.academy.transformer.ModuleMapper;
 
 @Service
 @Transactional
@@ -23,9 +22,6 @@ public class ModuleServiceImpl implements ModuleService{
 	
 	@Autowired
 	private ModuleRepository repository;
-	
-	@Autowired
-	private ModuleMapper mapper;
 	
 	@Override
 	public List<Module> findAll(Integer pageNum, Integer size, String sortBy) {

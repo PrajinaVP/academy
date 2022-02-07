@@ -47,5 +47,5 @@ https://www.springboottutorial.com/spring-boot-crud-rest-service-with-jpa-hibern
 https://www.baeldung.com/spring-boot-start#:~:text=Spring%20Boot%20Tutorial%20%E2%80%93%20Bootstrap%20a%20Simple%20Application,View.%20...%205%20Security.%20...%20More%20items...%20
 https://knpcode.com/spring/spring-data-jpa-pagination-sorting-example/#PagingandSorting <br />
 https://tenmilesquare.com/resources/software-development/spring-boot-jpa-relationship-quick-guide/#:~:text=The%20entity%20with%20the%20foreign%20key%20in%20its,by%20the%20artist%20entity%20on%20the%20ranking%20object <br />
-
+https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion <br />
 https://springdoc.org/

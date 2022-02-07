@@ -2,11 +2,20 @@ package com.prajina.academy.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableSet;
+import com.prajina.academy.api.Course;
+import com.prajina.academy.api.Module;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class CourseView {
+public class CourseView implements Course {
 	Long id;
 	String name;
 	String description;
@@ -15,6 +24,23 @@ public class CourseView {
 	String status;
     private Set<ModuleView> modules = new HashSet<>();
 
+	CourseView() {	}
+
+	CourseView(Course course){
+		BeanUtils.copyProperties(course, this, CourseView.class);
+	}
+	
+	public static CourseView convert(Course course) {
+		if (course == null) {
+			return null;
+		}
+		if(course instanceof CourseView) {
+			return (CourseView) course;
+		}
+		
+		return new CourseView(course);
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -55,20 +81,26 @@ public class CourseView {
 		this.version = version;
 	}
 
-	public Set<ModuleView> getModules() {
-		return modules;
-	}
-
-	public void setModules(Set<ModuleView> modules) {
-		this.modules = modules;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Override
+	@JsonProperty
+	@JsonSerialize(contentAs = ModuleView.class)
+	public Set<Module> getModules() {
+		return ImmutableSet.copyOf(modules);		
+	}
+	
+	@Override
+	@JsonDeserialize(contentAs = ModuleView.class)
+	public void setModules(Set<Module> modules) {
+		// conversion method to cast courses with a stream collecting to a Set of Views
+		this.modules = modules.stream().map(ModuleView::convert).collect(Collectors.toSet()); 	
 	}
 
 	@Override

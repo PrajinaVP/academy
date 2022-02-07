@@ -3,6 +3,7 @@ package com.prajina.academy.entity;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,9 +18,12 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.ImmutableSet;
 import com.prajina.academy.api.Course;
 import com.prajina.academy.api.Module;
+import com.prajina.academy.model.CourseView;
 import com.prajina.academy.model.ModuleView;
 
 @Entity
@@ -43,13 +47,15 @@ public class ModuleImpl implements Module, Serializable {
 	String version;
 	@Column(columnDefinition = "varchar(15) not null default 'active'")
 	String status;
+	
+	@JsonBackReference
 	@ManyToMany(mappedBy = "modules", fetch = FetchType.LAZY)
 	private Set<CourseImpl> courses = new HashSet<>();
 	
 	ModuleImpl() {	}
 
 	ModuleImpl(Module module){
-		BeanUtils.copyProperties(module,  null, ModuleImpl.class);
+		BeanUtils.copyProperties(module,  this, ModuleImpl.class);
 	}
 	
 	public static ModuleImpl convert(Module module) {
@@ -59,6 +65,7 @@ public class ModuleImpl implements Module, Serializable {
 		if(module instanceof ModuleImpl) {
 			return (ModuleImpl) module;
 		}
+		
 		return new ModuleImpl(module);	
 	}
 	public Long getId() {
@@ -104,11 +111,7 @@ public class ModuleImpl implements Module, Serializable {
 	}
 
 	public void setCourses(Set<Course> modules) {
-		Set<CourseImpl> courseImpls = new HashSet<>();
-		for (Course course: courseImpls) {
-			courseImpls.add((CourseImpl) course);
-		}
-		this.courses = courseImpls; 
+		this.courses = courses.stream().map(CourseImpl::convert).collect(Collectors.toSet()); 
 	}
 	
 	@Override

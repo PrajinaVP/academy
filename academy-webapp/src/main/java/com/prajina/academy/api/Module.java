@@ -1,10 +1,8 @@
 package com.prajina.academy.api;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public interface Module {
-	
 	
 	 Long getId();
 	 void setId(Long id);

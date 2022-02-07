@@ -27,7 +27,7 @@ public class CourseView implements Course {
 	CourseView() {	}
 
 	CourseView(Course course){
-		BeanUtils.copyProperties(course,  null, CourseView.class);
+		BeanUtils.copyProperties(course, this, CourseView.class);
 	}
 	
 	public static CourseView convert(Course course) {
@@ -37,8 +37,8 @@ public class CourseView implements Course {
 		if(course instanceof CourseView) {
 			return (CourseView) course;
 		}
-		return new CourseView(course);
 		
+		return new CourseView(course);
 	}
 	
 	public Long getId() {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prajina.academy.api.Module;
+import com.prajina.academy.model.ModuleView;
 import com.prajina.academy.service.ModuleService;
 
 @RestController
@@ -34,16 +35,16 @@ public class ModuleController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> addModule(@RequestBody Module module) {
-		Module savedModule = service.save(module);
+	public ResponseEntity<?> addModule(@RequestBody ModuleView module) {
+		ModuleView savedModule = ModuleView.convert(service.save(module));
 		
 		return new ResponseEntity<>(savedModule, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateModule(@Valid @PathVariable(value="id", required=true) Long id,
-			@RequestBody Module module) {
-		Module updatedModule = service.update(id, module);
+			@RequestBody ModuleView module) {
+		ModuleView updatedModule = ModuleView.convert(service.update(id, module));
 		
 		return new ResponseEntity<>(updatedModule, HttpStatus.OK);
 	}

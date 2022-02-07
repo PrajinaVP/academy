@@ -57,7 +57,6 @@ public class CourseController {
 		return responseEntity;
 	}
 
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CourseView> getCourse(@PathVariable("id") Long id) {
 		logger.debug("Fetching Course with id " + id);

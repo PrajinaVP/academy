@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -22,14 +23,13 @@ public class ModuleView implements Module {
 	String contact;
 	String version;
 	String status;
-
-
+	@JsonIgnore
 	private Set<CourseView> courses = new HashSet<>();
 	
 	ModuleView() {	}
 
 	ModuleView(Module module){
-		BeanUtils.copyProperties(module,  null, ModuleView.class);
+		BeanUtils.copyProperties(module, this, ModuleView.class);
 	}
 	
 	public static ModuleView convert(Module module) {
@@ -39,6 +39,7 @@ public class ModuleView implements Module {
 		if(module instanceof ModuleView) {
 			return (ModuleView) module;
 		}
+
 		return new ModuleView(module);	
 	}
 	
@@ -80,21 +81,20 @@ public class ModuleView implements Module {
 		this.status = status;
 	}
 	
-	@Override
-	@JsonDeserialize(contentAs = CourseView.class)
-	public void setCourses(Set<Course> courses) {
-		//TODO conversion method to cast courses with a stream collecting to a Set of Views
-		this.courses = courses.stream().map(CourseView::convert).collect(Collectors.toSet()); 
-		
-	}
-	
-	@Override
+	@Override 
 	@JsonProperty
-	@JsonSerialize(contentAs = CourseView.class)
-	public Set<Course> getCourses() {
-		return ImmutableSet.copyOf(courses);		
+	@JsonSerialize(contentAs = CourseView.class) 
+	public Set<Course> getCourses() { 
+		return ImmutableSet.copyOf(courses); 
 	}
 	
+	@Override
+	@JsonDeserialize(contentAs = CourseView.class) 
+	public void setCourses(Set<Course> courses) { 
+		// conversion method to cast courses with stream collecting to a Set of Views 
+		this.courses = courses.stream().map(CourseView::convert).collect(Collectors.toSet()); 
+	}
+
 	@Override
 	public String toString() {
 		return "Module [id=" + id + ", name=" + name + ", description=" + description + ", contact=" + contact

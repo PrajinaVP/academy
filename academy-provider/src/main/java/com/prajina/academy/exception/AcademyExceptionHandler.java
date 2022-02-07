@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class AcademyExceptionHandler extends ResponseEntityExceptionHandler {
 
 	Logger logger = LoggerFactory.getLogger(AcademyExceptionHandler.class);

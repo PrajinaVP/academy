@@ -1,6 +1,5 @@
 package com.prajina.academy.api;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public interface Course {
