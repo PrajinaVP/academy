@@ -50,7 +50,7 @@ public class CourseImpl implements Course, Serializable {
 	@Column(name="STATUS", columnDefinition = "varchar(15) not null default 'draft'")
 	String status;
 	
-	@JsonManagedReference
+	//@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "COURSE_MODULE",
         joinColumns = {

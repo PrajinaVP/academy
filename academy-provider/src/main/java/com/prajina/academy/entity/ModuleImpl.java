@@ -48,7 +48,7 @@ public class ModuleImpl implements Module, Serializable {
 	@Column(columnDefinition = "varchar(15) not null default 'active'")
 	String status;
 	
-	@JsonBackReference
+	//@JsonBackReference
 	@ManyToMany(mappedBy = "modules", fetch = FetchType.LAZY)
 	private Set<CourseImpl> courses = new HashSet<>();
 	

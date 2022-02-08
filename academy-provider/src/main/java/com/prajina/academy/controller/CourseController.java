@@ -1,5 +1,8 @@
 package com.prajina.academy.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,15 @@ public class CourseController {
 	
 	@GetMapping
 	ResponseEntity<?> findAll(@RequestParam(value="pageNum", defaultValue="0") Integer pageNum,
-			@RequestParam(value="pageSize", defaultValue="5") Integer pageSize,
+			@RequestParam(value="pageSize", defaultValue="50") Integer pageSize,
 			@RequestParam(value="sortBy", defaultValue="name") String sortBy) {
-		
-		return ResponseEntity.ok(service.findAll(pageNum, pageSize, sortBy));
+		System.out.println("Provider CTRL findAll  ");
+		List<CourseView> courseViewList = 
+				service.findAll(pageNum, pageSize, sortBy)
+				.stream().map(CourseView :: convert)
+				.collect(Collectors.toList());
+		System.out.println("Provide SVC findAll courseViewList " + courseViewList);
+		return new ResponseEntity<>(courseViewList, HttpStatus.OK);
 	}
 	
 	@PostMapping

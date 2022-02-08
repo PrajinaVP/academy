@@ -33,9 +33,14 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Override
 	public List<Course> findAll(Integer pageNum, Integer size, String sortBy) {
-		
+		System.out.println("Provide SVC findAll");
 		Pageable page = PageRequest.of(pageNum, size, Sort.by(sortBy));
 		Page<CourseImpl> pagedCourse = repository.findAll(page);
+		
+		System.out.println("Provide SVC findAll pagedCourse " + pagedCourse);
+		
+		List<CourseImpl> courseImplList = pagedCourse.getContent();
+		System.out.println("Provide SVC courseImplList " + courseImplList);
 		
 		return ImmutableList.copyOf(pagedCourse.getContent());
 	}
