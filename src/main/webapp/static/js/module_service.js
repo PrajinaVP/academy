@@ -42,7 +42,7 @@
 	                return response.data;
 	            },
 	            function(errResponse){
-	                 $log.error(`Error while creating Modules ${errResponse}`);
+	                 $log.error(`Error while creating Modules ${JSON.stringify(errResponse)}`);
 					//optional error handling in UI
 	            }
 	        );

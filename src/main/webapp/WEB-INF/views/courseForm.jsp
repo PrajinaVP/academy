@@ -1,6 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
-  
+ 
+ <jsp:include page="header.jsp"/>
  <h1>Add New Course</h1>  
 <form:form method="post" action="save">    
  <table >    

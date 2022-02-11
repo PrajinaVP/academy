@@ -1,13 +1,12 @@
 package com.prajina.academy.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * This class represent the courses
  * 
  * @author Prajina
- *
- */
-/**
- * @author prajina.purayil
  *
  */
 public class Course {

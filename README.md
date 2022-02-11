@@ -68,3 +68,11 @@ https://www.youtube.com/watch?v=F5MQdmJfWcA&t=67s
 https://howtodoinjava.com/spring5/webmvc/spring5-mvc-hibernate5-example/
 https://stackoverflow.com/questions/26676782/when-use-abstractannotationconfigdispatcherservletinitializer-and-webapplication
 
+## Task 2
+
+### References
+https://www.javaguides.net/2019/12/spring-mvc-crud-example-with-hibernate-jsp-mysql-maven-eclipse.html
+https://howtodoinjava.com/spring5/webmvc/spring5-mvc-hibernate5-example/
+https://www.javatips.net/blog/how-to-view-content-of-h2-in-memory-database-file-database
+https://www.learn-it-with-examples.com/database/nosql-databases/h2-database/h2-database-installation-windows.html
+

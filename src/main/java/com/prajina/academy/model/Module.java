@@ -3,7 +3,7 @@ package com.prajina.academy.model;
 import java.util.Objects;
 
 public class Module {
-	//Long 
+
 	private Long id;
 	private String name;
 	private String desc;

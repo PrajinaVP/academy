@@ -5,140 +5,92 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.prajina.academy.dao.ModuleDAO;
+import com.prajina.academy.model.Course;
 import com.prajina.academy.model.Module;
+import com.prajina.academy.transformer.ModuleMapper;
 
-@Service("ModuleService")
+@Service
 public class ModuleServiceImpl implements ModuleService {
 
-	private static final AtomicLong counter = new AtomicLong();
-
-	// TODO Read from xls file
-	private static List<Module> modules;
-
-	static {
-		modules = getModules();
-	}
+	@Autowired
+	private ModuleDAO dao;
+	
+	@Autowired
+	private ModuleMapper mapper;
 
 	@Override
+	@Transactional
 	public List<Module> findAll() {
-		return modules;
+		return mapper.toModel(dao.findAll());
 	}
 
 	@Override
+	@Transactional
 	public Module findById(Long id) {
-		for (Module module : modules) {
-			if (module.getId() == id) {
-				return module;
-			}
-		}
-		return null;
+		return mapper.toModel(dao.findById(id));
 	}
 
 	@Override
+	@Transactional
 	public Module findByName(String name) {
-		for (Module module : modules) {
-			if (module.getName().equalsIgnoreCase(name)) {
-				return module;
-			}
-		}
-
-		return null;
+		return mapper.toModel(dao.findByName(name));
 	}
 
 	@Override
+	@Transactional
 	public List<Module> findByDesc(String desc) {
-		List moduleContainingDesc = new ArrayList();
-
-		for (Module module : modules) {
-			if (module.getDesc().contains(desc)) {
-				moduleContainingDesc.add(module);
-			}
-		}
-
-		return moduleContainingDesc;
+		return mapper.toModel(dao.findByDesc(desc));
 	}
 
 	@Override
-	public Module create(Module module) {
+	@Transactional
+	public void save(Module module) {
 		if (module == null) {
 			throw new RuntimeException("No module provided!");
 		}
-		Long id = counter.incrementAndGet();
-		module.setId(id);
-		modules.add(module);
-
-		return modules.get(modules.indexOf(module));
+		dao.save(mapper.toEntity(module));
 	}
 
 	@Override
-	public List<Module> create(List<Module> moduleList) {
+	@Transactional
+	public void save(List<Module> moduleList) {
 		if (moduleList == null) {
 			throw new RuntimeException("No module provided!");
 		}
 
 		for (Module module : moduleList) {
-			module.setId(counter.incrementAndGet());
-			modules.add(module);
-		}
-
-		return modules;
-	}
-
-	@Override
-	public Module update(Module module) {
-		if (module == null || module.getId() == null) {
-			throw new RuntimeException("No module provided for update or module id does not exist");
-		}
-		int index = modules.indexOf(module);
-		modules.set(index, module);
-
-		return modules.get(index);
-	}
-
-	@Override
-	public void updateModule(List<Module> moduleList) {
-		for (Module module : modules) {
-			int index = modules.indexOf(module);
-			modules.set(index, module);
+			save(module);
 		}
 	}
 
 	@Override
-	public void deleteModule(List<Module> moduleList) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
+	@Transactional
 	public void deleteById(Long id) {
+		dao.delete(id);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteModule(List<Module> moduleList) {
+		if (moduleList == null) {
+			throw new RuntimeException("No course provided!");
+		}
 
-		for (Iterator<Module> iterator = modules.iterator(); iterator.hasNext();) {
-			Module module = iterator.next();
-			if (module.getId() == id) {
-				iterator.remove();
-			}
+		for (Module module : moduleList) {
+			deleteById(module.getId());
 		}
 	}
 
 	@Override
-	public void deleteAll() {
-		modules.clear();
-	}
-
-	@Override
+	@Transactional
 	public boolean isModuleExist(Module module) {
 
-		return findById(module.getId()) != null;
+		return module != null && module.getId() != null && findById(module.getId()) != null;
 	}
 
-	private static List<Module> getModules() {
-		List<Module> modules = new ArrayList<Module>();
-		modules.add(new Module(counter.incrementAndGet(), "Modifier", "Java Modifiers", 1L));
-		modules.add(new Module(counter.incrementAndGet(), "Streams", "Java Stream", 1L));
-		modules.add(new Module(counter.incrementAndGet(), "Angular", "Angular JS", 2L));
-
-		return modules;
-	}
 }

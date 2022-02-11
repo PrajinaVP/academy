@@ -41,13 +41,9 @@ public class CourseController {
 	@PostMapping("/save")
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("course") Course course) {
-		// TODO This should be save/ merge when db is set up
-		if (service.isCourseExist(course)) {
-			service.update(course);
-		} else {
-			service.create(course);
-		}
-
+		
+		service.save(course);
+		
 		List<Course> courses = service.findAll();
 		ModelAndView mav = new ModelAndView("course");
 		mav.addObject("courseList", courses);
