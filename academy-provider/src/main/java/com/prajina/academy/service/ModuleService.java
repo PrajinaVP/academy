@@ -8,7 +8,7 @@ public interface ModuleService {
 	
 	public List<Module> findAll(Integer pageNum, Integer size, String sortBy);
 	
-	public Module save(Module module);
+	public Module create(Module module);
 	
 	public Module update(Long id, Module module);
 	

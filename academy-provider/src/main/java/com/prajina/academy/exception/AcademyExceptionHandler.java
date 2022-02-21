@@ -73,7 +73,8 @@ public class AcademyExceptionHandler extends ResponseEntityExceptionHandler {
     		final HttpStatus status,
     		final WebRequest request,
     		final List<String> errors) {
-    	
+    	logger.error("Exception :: " + exception);
+    	System.out.println("Exception :: " + exception);
     	ExceptionResponse exceptionResponse = new ExceptionResponse(
     			UUID.randomUUID(), 
     			status.value(), 

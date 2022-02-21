@@ -15,6 +15,22 @@ public class Course {
 	String status;
     private Set<Module> modules = new HashSet<>();
 
+	public Course() {
+		super();
+	}
+
+	public Course(Long id, String name, String description, String contact, String version, String status,
+			Set<Module> modules) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.contact = contact;
+		this.version = version;
+		this.status = status;
+		this.modules = modules;
+	}
+
 	public Long getId() {
 		return id;
 	}

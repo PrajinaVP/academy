@@ -17,6 +17,22 @@ public class Module {
 	@JsonIgnore
 	private Set<Course> courses = new HashSet<>();
 	
+	public Module() {
+		super();
+	}
+	
+	public Module(Long id, String name, String description, String contact, String version, String status,
+			Set<Course> courses) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.contact = contact;
+		this.version = version;
+		this.status = status;
+		this.courses = courses;
+	}
+
 	public Long getId() {
 		return id;
 	}
