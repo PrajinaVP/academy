@@ -27,6 +27,13 @@ public class AcademyMocks {
 		return mock(ModuleRepository.class);
 	}
 	
+	@Bean
+	@Primary
+	public CourseService courseService() {
+		return mock(CourseService.class);
+	}
+	
+	
 //	@Bean
 //	@Primary
 //	public CourseMapper courseMapper() {

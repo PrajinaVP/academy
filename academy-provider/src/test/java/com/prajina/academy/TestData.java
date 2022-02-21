@@ -34,6 +34,18 @@ public class TestData {
 
 		return courses;
 	}
+	
+	public List<Course> mockCourseList() {
+		Course course1 = new Course(1L, "Java SE 7", "Java 7", "java@praj.com", "v1", "inactive", null);
+		Course course2 = new Course(2L, "Java SE 17", "Java 17", "java@praj.com", "v2", "active", null);
+		Course course3 = new Course(3L, "Angular", "Angular", "angular@praj.com", "v1", "active", null);
+		List<Course> courses = new ArrayList<Course>();
+		courses.add(course1);
+		courses.add(course2);
+		courses.add(course3);
+
+		return courses;
+	}
 
 	public Page<CourseEntity> mockOnePageCourseData() {
 		Page<CourseEntity> result = mock(Page.class);
@@ -49,6 +61,18 @@ public class TestData {
 	
 	public Module getModule() {
 		return new Module(1L, "Java Modifiers", "Java Modifiers Module", "java@praj.com", "v1", "active", null);
+	}
+	
+	public List<Module> mockModuleList() {
+		Module module1 = new Module(1L, "Java SE 17 Introduction", "Java 17", "java@praj.com", "v1", "inactive", null);
+		Module module2 = new Module(2L, "Java Modifiers", "Java Modifiers Module", "java@praj.com", "v2", "active", null);
+		Module module3 = new Module(3L, "Angular", "Angular", "angular@praj.com", "v1", "active", null);
+		List<Module> modules = new ArrayList<Module>();
+		modules.add(module1);
+		modules.add(module2);
+		modules.add(module3);
+
+		return modules;
 	}
 	
 	public List<ModuleEntity> mockModuleEntityList() {
