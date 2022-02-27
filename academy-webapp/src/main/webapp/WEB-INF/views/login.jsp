@@ -10,21 +10,26 @@
 	<body>
 		<form:form id="submitForm" name="submitForm" method="POST">
 			<div align="center">
-				<table>
-					<tr>
-						<td>User Name</td>
-						<td><input type="text" name="userName" /></td>
-					</tr>
-					<tr>
-						<td>Password</td>
-						<td><input type="password" name="password" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" value="Submit" /></td>
-					</tr>
-				</table>
-				<div style="color: red">${error}</div>
+				<div class="form-group">
+					<label class="text" for="userName">User Name</label>
+					<input type="text" 
+						id="userName" 
+						name="userName"
+						class="form-control"
+						placeholder="User Name" />
+					
+					<label class="text" for="password">Password</label>
+					<input type="password" 
+						id="password"
+						name="password"
+						class="form-control"
+						placeholder="Password" />
+					
+					<input type="submit" id="loginBtn" value="Login" />
+				</div>
+				<div id="errorDiv" style="color: red">
+					<h4 id="errorMsg">${error}</h4>
+				</div>
 			</div>
 		</form:form>
 	</body>

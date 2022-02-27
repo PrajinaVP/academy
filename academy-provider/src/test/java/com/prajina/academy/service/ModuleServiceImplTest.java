@@ -20,7 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-import com.prajina.academy.TestData;
+import com.prajina.academy.data.TestData;
 import com.prajina.academy.entity.ModuleEntity;
 import com.prajina.academy.model.Module;
 import com.prajina.academy.repository.ModuleRepository;

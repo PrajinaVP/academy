@@ -1,4 +1,4 @@
-# Preclearance Task #3 - Unit Testing and Web Automation Testing
+# Preclearance Task 4 - Unit Testing and Web Automation Testing
 
 ## Tech Stack
  - Java 1.8.x 
@@ -41,10 +41,22 @@ The AbstractTestNGSpringContextTests is an abstract base class having the Applic
 TestNG is a testing framework that is inspired by JUnit and NUnit. It’s for the Java programming language. TestNG covers a wider range of test categories like unit, functional, end-to-end, integration, etc. NG in TestNG stands for Next Generation.
 
 It’s an open-source framework that comes under the Apache License. It provides a rich set of annotations that accelerate the test script development.
- 
+
+**Common Errors**
+1. Webapp Test
+`java.lang.NoSuchMethodError: 'com.google.common.collect.ImmutableMap com.google.common.collect.ImmutableMap.of(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'`
+
+Solution
+ `WebDriverManager version 5.1.0`
+
+
+
 ### References
-https://www.toolsqa.com/testng/testng-tutorial/
-[Install TestNG](https://testng.org/doc/download.html)
+https://www.toolsqa.com/testng/testng-tutorial/ <br />
+[Install TestNG](https://testng.org/doc/download.html) <br />
+[Selenium 4 Tutorial Videos](https://www.youtube.com/playlist?list=PLhW3qG5bs-L_8bwNnMHdJ1Wq5M0sUmpSH) <br />
+[Selenium Webdriver documentation](https://www.selenium.dev/documentation/webdriver/) <br />
+
 https://reflectoring.io/spring-boot-web-controller-test/ <br />
 https://www.codeusingjava.com/boot/testng <br />
 https://www.javainuse.com/spring/springboot_testng <br />

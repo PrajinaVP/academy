@@ -1,4 +1,4 @@
-package com.prajina.academy;
+package com.prajina.academy.data;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;

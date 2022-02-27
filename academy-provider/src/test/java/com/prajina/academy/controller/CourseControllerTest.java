@@ -14,7 +14,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testng.annotations.Test;
 
-import com.prajina.academy.TestData;
+import com.prajina.academy.data.TestData;
 import com.prajina.academy.service.AcademyMocks;
 import com.prajina.academy.service.CourseService;
 

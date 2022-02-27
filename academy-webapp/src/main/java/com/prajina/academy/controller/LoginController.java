@@ -39,7 +39,7 @@ public class LoginController {
 				model.addAttribute("user", login.getUserName());
 				return "welcome";
 			} else {
-				model.addAttribute("error", "Invalid Details");
+				model.addAttribute("error", "Invalid Login Credentials!");
 				return "login";
 			}
 		} else {
