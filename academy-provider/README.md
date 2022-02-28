@@ -49,14 +49,55 @@ It’s an open-source framework that comes under the Apache License. It provides
 Solution
  `WebDriverManager version 5.1.0`
 
+### jacoco code coverage
+- Add Maven plugin for jacoco
 
+	<plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <executions>
+            <!-- Prepares the property pointing to the JaCoCo runtime agent which
+                is passed as VM argument when Maven the Surefire plugin is executed. -->
+            <execution>
+                <id>pre-unit-test</id>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                    <!-- Sets the name of the property containing the settings for JaCoCo
+                        runtime agent. -->
+                    <propertyName>surefireArgLine</propertyName>
+                </configuration>
+            </execution>
+            <!-- Ensures that the code coverage report for unit tests is created
+                after unit tests have been run. -->
+            <execution>
+                <id>post-unit-test</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+                <configuration>
+                    <!-- Sets the output directory for the code coverage report. -->
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    
+Besides the normal Maven build a site folder will be created. <br />
+
+Inside this folder will be a jacoco-ut folder, which contains the test coverage analysis files. <br />
+
+The index.html can be opened in a browser in order to visually see the test coverage results.  <br />
 
 ### References
 https://www.toolsqa.com/testng/testng-tutorial/ <br />
 [Install TestNG](https://testng.org/doc/download.html) <br />
 [Selenium 4 Tutorial Videos](https://www.youtube.com/playlist?list=PLhW3qG5bs-L_8bwNnMHdJ1Wq5M0sUmpSH) <br />
 [Selenium Webdriver documentation](https://www.selenium.dev/documentation/webdriver/) <br />
-
+[jacoco](https://www.vogella.com/tutorials/Jacoco/article.html) <br />
 https://reflectoring.io/spring-boot-web-controller-test/ <br />
 https://www.codeusingjava.com/boot/testng <br />
 https://www.javainuse.com/spring/springboot_testng <br />
