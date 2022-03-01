@@ -4,7 +4,9 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 
@@ -86,6 +88,19 @@ public class TestData {
 
 		return modules;
 	}
+	
+	public Set<ModuleEntity> mockModuleEntitySet() {
+		ModuleEntity module1 = new ModuleEntity(1L, "Java SE 7", "Java 7", "java@praj.com", "v1", "inactive", null);
+		ModuleEntity module2 = new ModuleEntity(2L, "Java Modifiers", "Java Modifiers Module", "java@praj.com", "v2", "active", null);
+		ModuleEntity module3 = new ModuleEntity(3L, "Angular", "Angular", "angular@praj.com", "v1", "active", null);
+		Set<ModuleEntity> modules = new HashSet<ModuleEntity>();
+		modules.add(module1);
+		modules.add(module2);
+		modules.add(module3);
+
+		return modules;
+	}
+
 
 	public Page<ModuleEntity> mockOnePageModuleData() {
 		Page<ModuleEntity> result = mock(Page.class);

@@ -98,11 +98,6 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
-                        <configuration>
-                            <!-- Sets the name of the property containing the settings for JaCoCo
-                                runtime agent. -->
-                            <propertyName>surefireArgLine</propertyName>
-                        </configuration>
                     </execution>
                     <!-- Ensures that the code coverage report for unit tests is created
                         after unit tests have been run. -->
@@ -118,16 +113,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <!-- Used for unit tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <!-- Sets the VM argument line used when unit tests are run. -->
-                    <argLine>${surefireArgLine}</argLine>
-                </configuration>
             </plugin>
 		</plugins>
 	</build>

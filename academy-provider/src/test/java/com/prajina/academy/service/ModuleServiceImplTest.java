@@ -140,7 +140,7 @@ public class ModuleServiceImplTest extends AbstractTestNGSpringContextTests {
 		service.update(1L, new Module());
 	}
 	
-	@Test//(expectedExceptions = {Exception.class})
+	@Test
 
 	public void testUpdate_validInput_returnUpdatedModule() {
 		ModuleEntity moduleEntity = testData.getModuleEntity();
@@ -163,11 +163,34 @@ public class ModuleServiceImplTest extends AbstractTestNGSpringContextTests {
 		verify(mockedRepository).save(moduleEntity);
 	}
 	
+	@Test(expectedExceptions = {Exception.class})
+
+	public void testUpdate_moduleDoesNotInExist_returnUpdatedModule() {
+		ModuleEntity moduleEntity = testData.getModuleEntity();
+		ModuleEntity updatedModuleEntity = new ModuleEntity();
+		updatedModuleEntity = testData.getModuleEntity();
+		updatedModuleEntity.setName(moduleEntity.getName() + " Updated");
+		
+		when(mockedRepository.save(any())).thenReturn(moduleEntity, updatedModuleEntity);
+		when(mockedRepository.findById(any())).thenReturn(null);
+	
+		Module createdModule = service.create(testData.getModule());
+		createdModule.setName(createdModule.getName() + " Updated");
+		
+		service.update(1L, createdModule);
+	}
+	
 	@Test
 	public void testDelete_validInput_success() {
 		doNothing().when(mockedRepository).deleteById(anyLong());
 
 		service.deleteById(1L);
 		verify(mockedRepository).deleteById(1L);
+	}
+	
+	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "No module id provided to delete!")
+
+	public void testDelete_nullInput_exception() {
+		service.deleteById(null);
 	}
 }

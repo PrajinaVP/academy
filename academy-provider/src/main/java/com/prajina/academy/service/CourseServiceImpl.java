@@ -1,5 +1,6 @@
 package com.prajina.academy.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +102,9 @@ public class CourseServiceImpl implements CourseService{
 				.orElseThrow(() -> new RuntimeException("Module with id " + moduleId + " not found!" ));
 		
 		CourseEntity courseToUpdate = courseFromDB.get();
+		if (courseToUpdate.getModules() == null) {
+			courseToUpdate.setModules(new HashSet<>());
+		}
 		courseToUpdate.getModules().add(moduleFromDB.get());
 		
 		return mapper.toModel(repository.save(courseToUpdate));
