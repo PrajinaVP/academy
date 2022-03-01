@@ -159,6 +159,23 @@ public class CourseServiceImplTest extends AbstractTestNGSpringContextTests {
 		verify(mockedCourseRepository).save(courseEntity);
 	}
 	
+
+	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "Course with id 1 not found!")
+	public void testUpdate_courseNotInDB_throwsException() {
+		CourseEntity courseEntity = testData.getCourseEntity();
+		CourseEntity updatedCourseEntity = new CourseEntity();
+		updatedCourseEntity = testData.getCourseEntity();
+		updatedCourseEntity.setName(courseEntity.getName() + " Updated");
+		
+		when(mockedCourseRepository.save(any())).thenReturn(courseEntity, updatedCourseEntity);
+		when(mockedCourseRepository.findById(any())).thenReturn(null);
+		
+		Course createdCourse = service.create(testData.getCourse());
+		createdCourse.setName(createdCourse.getName() + " Updated");
+		
+		service.update(1L, createdCourse);
+	}
+	
 	@Test
 
 	public void testAddModule_validInput_returnUpdatedCourse() {
@@ -186,6 +203,81 @@ public class CourseServiceImplTest extends AbstractTestNGSpringContextTests {
 		assertNotEquals(updatedCourse.getName(), "Java SE 17");
 		
 		verify(mockedCourseRepository).save(courseEntity);
+	}
+	
+	@Test
+
+	public void testAddModule_validInputCourseCreatedWithoutModule_returnUpdatedCourse() {
+		ModuleEntity moduleEntity = testData.getModuleEntity();
+		Set<ModuleEntity> moduleSet = new HashSet<ModuleEntity>();
+		moduleSet.add(moduleEntity);
+		
+		CourseEntity courseEntity = testData.getCourseEntity();
+		courseEntity.setModules(null);
+		courseEntity.setName("Java SE 17 Updated");
+		
+		CourseEntity updatedCourseEntity = new CourseEntity();
+		updatedCourseEntity = testData.getCourseEntity();
+		updatedCourseEntity.setModules(moduleSet);
+		updatedCourseEntity.setName(courseEntity.getName() + " Updated");
+		
+		when(mockedCourseRepository.save(any())).thenReturn(courseEntity, updatedCourseEntity);
+		when(mockedCourseRepository.findById(any())).thenReturn(Optional.of(courseEntity));
+		when(mockedModuleRepository.findById(any())).thenReturn(Optional.of(moduleEntity));
+		
+		Course updatedCourse = service.addModule(1L, courseEntity.getId());
+		assertNotNull(updatedCourse);
+		assertEquals(updatedCourse.getId(), 1L);
+		assertEquals(updatedCourse.getName(), "Java SE 17 Updated");
+		
+		verify(mockedCourseRepository).save(courseEntity);
+	}
+
+	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "Course with id 1 not found!")
+	public void testAddModule_CourseNotInDB_throwsException() {
+		ModuleEntity moduleEntity = testData.getModuleEntity();
+		Set<ModuleEntity> moduleSet = new HashSet<ModuleEntity>();
+		moduleSet.add(moduleEntity);
+		
+		CourseEntity courseEntity = testData.getCourseEntity();
+		courseEntity.setModules(null);
+		
+		CourseEntity updatedCourseEntity = new CourseEntity();
+		updatedCourseEntity = testData.getCourseEntity();
+		updatedCourseEntity.setModules(moduleSet);
+		updatedCourseEntity.setName(courseEntity.getName() + " Updated");
+		
+		when(mockedCourseRepository.save(any())).thenReturn(courseEntity, updatedCourseEntity);
+		when(mockedCourseRepository.findById(any())).thenReturn(null);
+		
+		Course createdCourse = service.create(testData.getCourse());
+		createdCourse.setName(createdCourse.getName() + " Updated");
+		
+		service.addModule(1L, createdCourse.getId());
+	}
+	
+	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "Module with id 1 not found!")
+	public void testAddModule_ModuleNotInDB_throwsException() {
+		ModuleEntity moduleEntity = testData.getModuleEntity();
+		Set<ModuleEntity> moduleSet = new HashSet<ModuleEntity>();
+		moduleSet.add(moduleEntity);
+		
+		CourseEntity courseEntity = testData.getCourseEntity();
+		courseEntity.setModules(null);
+		
+		CourseEntity updatedCourseEntity = new CourseEntity();
+		updatedCourseEntity = testData.getCourseEntity();
+		updatedCourseEntity.setModules(moduleSet);
+		updatedCourseEntity.setName(courseEntity.getName() + " Updated");
+		
+		when(mockedCourseRepository.save(any())).thenReturn(courseEntity, updatedCourseEntity);
+		when(mockedCourseRepository.findById(any())).thenReturn(Optional.of(courseEntity));
+		when(mockedModuleRepository.findById(any())).thenReturn(null);
+		
+		Course createdCourse = service.create(testData.getCourse());
+		createdCourse.setName(createdCourse.getName() + " Updated");
+		
+		service.addModule(1L, createdCourse.getId());
 	}
 	
 	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "No course id provided to update!")
@@ -225,6 +317,29 @@ public class CourseServiceImplTest extends AbstractTestNGSpringContextTests {
 		Course updatedCourseModule = service.removeModule(updatedCourse.getId(), moduleEntity.getId());
 		assertNotNull(updatedCourseModule);
 		assertEquals(updatedCourseModule.getModules().size(), 0);
+	}
+	
+	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "Course with id 1 not found!")
+	public void testRemoveModule_CourseNotInDB_throwsException() {
+		ModuleEntity moduleEntity = testData.getModuleEntity();
+		Set<ModuleEntity> moduleSet = new HashSet<ModuleEntity>();
+		moduleSet.add(moduleEntity);
+		
+		CourseEntity courseEntity = testData.getCourseEntity();
+		courseEntity.setModules(null);
+		
+		CourseEntity updatedCourseEntity = new CourseEntity();
+		updatedCourseEntity = testData.getCourseEntity();
+		updatedCourseEntity.setModules(moduleSet);
+		updatedCourseEntity.setName(courseEntity.getName() + " Updated");
+		
+		when(mockedCourseRepository.save(any())).thenReturn(courseEntity, updatedCourseEntity);
+		when(mockedCourseRepository.findById(any())).thenReturn(null);
+		
+		Course createdCourse = service.create(testData.getCourse());
+		createdCourse.setName(createdCourse.getName() + " Updated");
+		
+		service.removeModule(1L, createdCourse.getId());
 	}
 	
 	@Test(expectedExceptions = {Exception.class}, expectedExceptionsMessageRegExp = "No course id provided to update!")
