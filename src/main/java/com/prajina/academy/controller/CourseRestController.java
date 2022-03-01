@@ -61,7 +61,7 @@ public class CourseRestController {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
-		courseService.create(course);
+		courseService.save(course);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri());
@@ -69,7 +69,7 @@ public class CourseRestController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Course> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
+	public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody Course course) {
 		logger.debug("Updating Course " + id);
 
 		Course currentCourse = courseService.findById(id);
@@ -79,8 +79,10 @@ public class CourseRestController {
 			
 			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
-
-		Course updatedCourse = courseService.update(course);
+		
+		courseService.save(course);
+		Course updatedCourse = courseService.findById(id);
+		
 		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
 	}
 
@@ -96,8 +98,10 @@ public class CourseRestController {
 		
 			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 		}
-
-		Course updatedCourse = courseService.update(course);
+		
+		courseService.save(course);
+		Course updatedCourse = courseService.findById(id);
+		
 		return new ResponseEntity<Course>(updatedCourse, HttpStatus.OK);
 	}
 
@@ -114,19 +118,4 @@ public class CourseRestController {
 		courseService.deleteById(id);
 		return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
 	}
-
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	public ResponseEntity<Course> deleteAllCourses() {
-		logger.debug("Deleting All Courses");
-
-		courseService.deleteAll();
-		List<Course> courses = courseService.findAll();
-		if (courses == null || courses.isEmpty()) {
-			return new ResponseEntity<Course>(HttpStatus.NO_CONTENT);
-		}
-
-		// TODO Throw custom exception
-		return new ResponseEntity<Course>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
 }
