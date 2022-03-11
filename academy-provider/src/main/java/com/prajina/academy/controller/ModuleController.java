@@ -38,7 +38,7 @@ public class ModuleController {
 	
 	@PostMapping
 	public ResponseEntity<?> addModule(@RequestBody Module module) {
-		Module savedModule = service.save(module);
+		Module savedModule = service.create(module);
 		
 		return new ResponseEntity<>(savedModule, HttpStatus.CREATED);
 	}

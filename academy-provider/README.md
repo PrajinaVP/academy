@@ -1,51 +1,109 @@
-### Useful MySQL
-Navigate to MYSQL bin directory C:\Program Files\MySQL\MySQL Server 8.0\bin
+# Preclearance Task 4 - Unit Testing and Web Automation Testing
 
+## Tech Stack
+ - Java 1.8.x 
+https://www.oracle.com/java/technologies/downloads/#java8
+ - Eclipse IDE 
+Download Eclipse ** Enterprise Java and Web Developer Tools **
+https://www.eclipse.org/downloads/packages/installer
+ - Maven 3.x 
+https://maven.apache.org/download.cgi?Preferred=ftp://ftp.osuosl.org/pub/apache/
+ - Spring Web MVC 4.x or 5.x (Not Boot) 
+ - Spring Boot 2.X 
+ -	TestNG 6.x
+ -	Bean Mocking framework, such as Mockito
+ -	Selenium 3.x
+ 
+### Steps
+- Add the following TestNG dependency to the pom.xml
+	
+	<!-- Testing Framework TestNG -->
+	<dependency>
+	    <groupId>org.testng</groupId>
+	    <artifactId>testng</artifactId>
+	    <version>7.5</version>
+	    <scope>test</scope>
+	</dependency>
+- Create a test class that extends AbstractTestNGSpringContextTests.
 
-```
-mysql -uyourUserName -p
-```
+To make TestNG test class work with our Spring Boot we should extend AbstractTestNGSpringContextTests. <br />
+The AbstractTestNGSpringContextTests is an abstract base class having the ApplicationContext supported in the testNG explicitly.
 
+- [Install TestNG plugin for Spring Boot application.](https://testng.org/doc/download.html)
+- Open the Test class and run as TestNG Test 
 
-NOTE:
-When you include spring-boot-starter-security then the login page will automatically be shown.
+### Notes
+ -	Webapp tests = Selenium
+ -	REST service tests = TestNG
+ -	Place all test files in a package on the backed app from Task 3. Task 5 will bypass the frontend app.
+ 
+#### What Is TestNG?
+TestNG is a testing framework that is inspired by JUnit and NUnit. It’s for the Java programming language. TestNG covers a wider range of test categories like unit, functional, end-to-end, integration, etc. NG in TestNG stands for Next Generation.
 
-To remove this login page-
+It’s an open-source framework that comes under the Apache License. It provides a rich set of annotations that accelerate the test script development.
 
-If you use Maven then removing this dependency and rebuild the project. Already there are some answers for this. Just remove the block (pom.xml):
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-If anyone uses Gradle then, just remove the following block from dependencies block(build.gradle) and reload build.gradle:
-dependencies {
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
-    ...
-}
-If you do not want to change the config file like pom.xml or build.gradle then source code level change will be the best suit for you. To do this, need to update the main class with, change @SpringBootApplication annotation with @SpringBootApplication(exclude = {SecurityAutoConfiguration.class}). This excludes parameter will remove Security configuration.
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-public class SpringCacheApplication {
+**Common Errors**
+1. Webapp Test
+`java.lang.NoSuchMethodError: 'com.google.common.collect.ImmutableMap com.google.common.collect.ImmutableMap.of(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'`
 
-    public static void main(String[] args) {
-    ...
-    }
-    ...
-}
-Moreover, if you want to keep the login page, then you can log in with generated security password. You can find it into console, looks like: Using generated security password: d408ce6f-470d-4**4-950a-81**9651f321
-{
-"usename" : "user",
-"password": "d408ce6f-470d-4**4-950a-81**9651f32"
-}
-For more information, you can read Spring Security.https://docs.spring.io/spring-boot/docs/2.0.0.M4/reference/html/boot-features-security.html
+Solution
+ `WebDriverManager version 5.1.0`
 
-### Open Api/ Swagger docs
-http://localhost:8081/swagger-ui/index.html
-http://localhost:8081/api-docs
+### jacoco code coverage
+- Add Maven plugin for jacoco
+
+	<plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <executions>
+            <!-- Prepares the property pointing to the JaCoCo runtime agent which
+                is passed as VM argument when Maven the Surefire plugin is executed. -->
+            <execution>
+                <id>pre-unit-test</id>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                    <!-- Sets the name of the property containing the settings for JaCoCo
+                        runtime agent. -->
+                    <propertyName>surefireArgLine</propertyName>
+                </configuration>
+            </execution>
+            <!-- Ensures that the code coverage report for unit tests is created
+                after unit tests have been run. -->
+            <execution>
+                <id>post-unit-test</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+                <configuration>
+                    <!-- Sets the output directory for the code coverage report. -->
+                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    
+Besides the normal Maven build a site folder will be created. <br />
+
+Inside this folder will be a jacoco-ut folder, which contains the test coverage analysis files. <br />
+
+The index.html can be opened in a browser in order to visually see the test coverage results.  <br />
 
 ### References
-https://www.springboottutorial.com/spring-boot-crud-rest-service-with-jpa-hibernate <br />
-https://www.baeldung.com/spring-boot-start#:~:text=Spring%20Boot%20Tutorial%20%E2%80%93%20Bootstrap%20a%20Simple%20Application,View.%20...%205%20Security.%20...%20More%20items...%20
-https://knpcode.com/spring/spring-data-jpa-pagination-sorting-example/#PagingandSorting <br />
-https://tenmilesquare.com/resources/software-development/spring-boot-jpa-relationship-quick-guide/#:~:text=The%20entity%20with%20the%20foreign%20key%20in%20its,by%20the%20artist%20entity%20on%20the%20ranking%20object <br />
-
-https://springdoc.org/
+https://www.toolsqa.com/testng/testng-tutorial/ <br />
+[Install TestNG](https://testng.org/doc/download.html) <br />
+[Selenium 4 Tutorial Videos](https://www.youtube.com/playlist?list=PLhW3qG5bs-L_8bwNnMHdJ1Wq5M0sUmpSH) <br />
+[Selenium Webdriver documentation](https://www.selenium.dev/documentation/webdriver/) <br />
+[jacoco](https://www.vogella.com/tutorials/Jacoco/article.html) <br />
+https://reflectoring.io/spring-boot-web-controller-test/ <br />
+https://www.codeusingjava.com/boot/testng <br />
+https://www.javainuse.com/spring/springboot_testng <br />
+https://testng.org/doc/documentation-main.html <br />
+https://www.softwaretestinghelp.com/spring-resttemplate-api-testing/ <br />
+https://howtodoinjava.com/spring-boot2/testing/springboottest-annotation/ <br />
+[Mockito Tutorial](https://www.tutorialspoint.com/mockito/index.htm)
+https://frontbackend.com/java/how-to-stub-a-method-to-return-different-objects-on-subsequent-invocations-using-mockito
+https://stacktraceguru.com/unittest/mock-void-method

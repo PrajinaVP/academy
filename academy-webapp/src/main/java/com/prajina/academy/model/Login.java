@@ -1,8 +1,5 @@
 package com.prajina.academy.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 public class Login {
 
 	private String userName;

@@ -27,14 +27,17 @@ public class ModuleServiceImpl implements ModuleService{
 	
 	@Override
 	public List<Module> findAll(Integer pageNum, Integer size, String sortBy) {
+		if (pageNum == null || pageNum < 0 || size == null ||size < 1 || sortBy == null) {
+			throw new RuntimeException("Invalid input!");
+		}
 		Pageable page = PageRequest.of(pageNum, size, Sort.by(sortBy));
-		Page<com.prajina.academy.entity.Module> pagedModule = repository.findAll(page);
+		Page<com.prajina.academy.entity.ModuleEntity> pagedModule = repository.findAll(page);
 		
 		return mapper.toModel(pagedModule.getContent());
 	}
 	
 	@Override
-	public Module save(Module module) {
+	public Module create(Module module) {
 		if (module == null) {
 			throw new RuntimeException("No module provided to save!");
 		}
@@ -51,10 +54,10 @@ public class ModuleServiceImpl implements ModuleService{
 			throw new RuntimeException("No module provided to update!");
 		}
 		
-		Optional<com.prajina.academy.entity.Module> moduleFromDB = Optional.ofNullable(repository.findById(id))
+		Optional<com.prajina.academy.entity.ModuleEntity> moduleFromDB = Optional.ofNullable(repository.findById(id))
 				.orElseThrow(() -> new RuntimeException("Module with id " + id + " not found!" ));
 		
-		com.prajina.academy.entity.Module moduleToUpdate = moduleFromDB.get();
+		com.prajina.academy.entity.ModuleEntity moduleToUpdate = moduleFromDB.get();
 		moduleToUpdate.setName(module.getName());
 		moduleToUpdate.setDescription(module.getDescription());
 		moduleToUpdate.setContact(module.getContact());

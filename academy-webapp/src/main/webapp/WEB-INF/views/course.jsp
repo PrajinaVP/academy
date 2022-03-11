@@ -28,18 +28,18 @@
       <div class="generic-container text-center" ng-controller="CourseController as ctrl">
           <div class="panel panel-default">
               <div class="d-flex justify-content-center"><span class="lead">Course Form </span></div>
-              <div class="formcontainer text-center">
+              <div id="courseForm" class="formcontainer text-center">
                   <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-                      <input type="hidden" ng-model="ctrl.course.id" />
+                      <input id="courseId" type="hidden" ng-model="ctrl.course.id" />
                       <div class="row">
                           <div class="form-group col-md-12">
                             <div class="col-md-3">
                             </div>
                               <div class="col-md-4">
                                <label class="col-md-2 control-lable" for="file">Name</label>
-                                  <input type="text" ng-model="ctrl.course.name" name="name" class="academy form-control input-sm" 
+                                  <input id="courseName" type="text" ng-model="ctrl.course.name" name="name" class="academy form-control input-sm" 
                                   	placeholder="Course Name" required />
-                                  <div class="has-error" ng-show="myForm.$dirty">
+                                  <div id= "nameErrorDiv" class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.name.$error.required">This is a required field</span>
                                       <span ng-show="myForm.name.$invalid">This field is invalid </span>
                                   </div>
@@ -53,7 +53,7 @@
                             </div>
                               <div class="col-md-4">
                               <label class="col-md-2 control-lable" for="file">Description</label>
-                                  <input type="text" ng-model="ctrl.course.description" class="form-control input-sm" 
+                                  <input type="text" id="description" ng-model="ctrl.course.description" class="form-control input-sm" 
                                   	placeholder="Course Description"/>
                               </div>
                           </div>
@@ -65,8 +65,12 @@
                             </div>
                               <div class="col-md-4">
 	                              <label class="col-md-2 control-lable" for="file">Version</label>
-	                              <input type="text" ng-model="ctrl.course.version" class="form-control input-sm" 
-                                  	placeholder="Course Version"/>
+	                              <input type="text" id="version" ng-model="ctrl.course.version" class="form-control input-sm" 
+                                  	placeholder="Course Version" required/>
+                                  <div id="versionErrorDiv" class="has-error" ng-show="myForm.$dirty">
+                                      <span ng-show="myForm.version.$error.required">This is a required field</span>
+                                      <span ng-show="myForm.version.$invalid">This field is invalid </span>
+                                  </div>	
                               </div>
                           </div>
                       </div>
@@ -77,7 +81,7 @@
                             </div>
                               <div class="col-md-4">
 	                              <label class="col-md-2 control-lable" for="file">Status</label>
-	                              <input type="text" ng-model="ctrl.course.status" class="form-control input-sm" 
+	                              <input type="text" id="status" ng-model="ctrl.course.status" class="form-control input-sm" 
                                   	placeholder="Course Status"/>
                               </div>
                           </div>
@@ -88,8 +92,8 @@
                           	<div class="col-md-3">
                             </div>
                               <div class="col-md-4">
-	                              <label class="col-md-2 control-lable" for="file">Status</label>
-	                              <input type="text" ng-model="ctrl.course.contact" class="form-control input-sm" 
+	                              <label class="col-md-2 control-lable" for="file">Contact</label>
+	                              <input type="text" id="contact" ng-model="ctrl.course.contact" class="form-control input-sm" 
                                   	placeholder="Course Contact"/>
                               </div>
                           </div>
@@ -97,16 +101,18 @@
 				
                       <div class="row">
                           <div class="form-actions floatRight">
-                              <input type="submit"  value="{{ctrl.course.id ? 'Update' : 'Add'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
-                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Clear Form</button>  
+                              <input type="submit"  id="submitBtn" value="{{ctrl.course.id ? 'Update' : 'Add'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                              <button type="button" id="clearBtn" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Clear Form</button>  
                           </div>
                       </div>
                   </form>
               </div>
           </div>
-          <div class="panel panel-default">
-                <!-- Default panel contents -->
-              <div class="panel-heading"><span class="lead">List of Courses </span></div>
+          <div id="resultDiv" class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading">
+              	<span class="lead">List of Courses </span>
+              </div>
               <div class="tablecontainer">
                   <table class="table table-hover table-striped" border=1>
                       <thead>

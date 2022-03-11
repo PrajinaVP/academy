@@ -39,7 +39,7 @@ public class CourseController {
 	
 	@PostMapping
 	public ResponseEntity<?> addCourse(@RequestBody Course course) {
-		Course savedCourse = service.save(course);
+		Course savedCourse = service.create(course);
 		
 		return new ResponseEntity<>(savedCourse, HttpStatus.CREATED);
 	}

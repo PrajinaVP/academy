@@ -3,6 +3,8 @@
 <html>
 	<body>
 		<jsp:include page="header.jsp"/>
-		<h3> Welcome ${user} </h3>
+		<div id="welcomeDiv">
+			<h3 id="welcomeMsg"> Welcome ${user}! </h3>
+		</div>
 	</body>
 </html>

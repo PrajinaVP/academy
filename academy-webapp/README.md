@@ -87,3 +87,70 @@ https://reflectoring.io/spring-resttemplate/
 
 http://www.dotnetawesome.com/2015/12/multiselect-dropdown-with-checkbox-in-angularjs.html
 
+## Task 4
+# Preclearance Task #3 - Unit Testing and Web Automation Testing
+
+## Tech Stack
+ - Java 1.8.x 
+https://www.oracle.com/java/technologies/downloads/#java8
+ - Eclipse IDE 
+Download Eclipse ** Enterprise Java and Web Developer Tools **
+https://www.eclipse.org/downloads/packages/installer
+ - Maven 3.x 
+https://maven.apache.org/download.cgi?Preferred=ftp://ftp.osuosl.org/pub/apache/
+ - Spring Web MVC 4.x or 5.x (Not Boot) 
+ - Spring Boot 2.X 
+ -	TestNG 6.x
+ -	Bean Mocking framework, such as Mockito
+ -	Selenium 3.x
+ 
+### POM Dependencies
+- Add the following dependencies to the pom.xml
+	
+	<!-- Testing Framework TestNG -->
+	<dependency>
+	    <groupId>org.testng</groupId>
+	    <artifactId>testng</artifactId>
+	    <version>7.5</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.seleniumhq.selenium</groupId>
+		<artifactId>selenium-java</artifactId>
+		<version>4.1.2</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>io.github.bonigarcia</groupId>
+		<artifactId>webdrivermanager</artifactId>								
+		<version>5.1.0</version>
+	</dependency>
+
+### Notes
+ -	Webapp tests = Selenium
+ -	REST service tests = TestNG
+ -	Place all test files in a package on the backed app from Task 3. Task 5 will bypass the frontend app.
+ 
+#### What Is TestNG?
+TestNG is a testing framework that is inspired by JUnit and NUnit. It’s for the Java programming language. TestNG covers a wider range of test categories like unit, functional, end-to-end, integration, etc. NG in TestNG stands for Next Generation.
+
+It’s an open-source framework that comes under the Apache License. It provides a rich set of annotations that accelerate the test script development.
+
+**Common Errors**
+1. Webapp Test
+`java.lang.NoSuchMethodError: 'com.google.common.collect.ImmutableMap com.google.common.collect.ImmutableMap.of(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'`
+
+Solution
+ `WebDriverManager version 5.1.0`
+
+### References
+https://docs.mendix.com/howto/testing/create-automated-tests-with-testng
+https://www.toolsqa.com/testng/testng-tutorial/
+[Install TestNG](https://testng.org/doc/download.html)
+https://testng.org/doc/documentation-main.html <br />
+https://www.softwaretestinghelp.com/spring-resttemplate-api-testing/ <br />
+[Mockito Tutorial](https://www.tutorialspoint.com/mockito/index.htm)
+https://frontbackend.com/java/how-to-stub-a-method-to-return-different-objects-on-subsequent-invocations-using-mockito
+https://stacktraceguru.com/unittest/mock-void-method
+
+

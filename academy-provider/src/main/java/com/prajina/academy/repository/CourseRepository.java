@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.prajina.academy.entity.Course;
+import com.prajina.academy.entity.CourseEntity;
 
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
 	
-	List<Course> findByName(String name, Pageable pageable);
-	List<Course> findByNameContaining(String name, Pageable pageable);
+	List<CourseEntity> findByName(String name, Pageable pageable);
+	List<CourseEntity> findByNameContaining(String name, Pageable pageable);
 	
 }
