@@ -93,6 +93,9 @@ Inside this folder will be a jacoco-ut folder, which contains the test coverage 
 The index.html can be opened in a browser in order to visually see the test coverage results.  <br />
 
 ### References
+
+https://www.javaguides.net/2021/08/angular-crud-example-with-spring-boot.html?msclkid=947610fea5c111ecb691e8edda3fc401
+
 https://www.toolsqa.com/testng/testng-tutorial/ <br />
 [Install TestNG](https://testng.org/doc/download.html) <br />
 [Selenium 4 Tutorial Videos](https://www.youtube.com/playlist?list=PLhW3qG5bs-L_8bwNnMHdJ1Wq5M0sUmpSH) <br />
