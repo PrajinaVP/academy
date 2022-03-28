@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -25,7 +26,10 @@ public class ModuleEntity implements Serializable {
 
 	private static final long serialVersionUID = -3959312241427277951L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// IDENTITY strategy is not supported in H2 db. Hence, using sequence. Auto was using the same sequence across all entities.
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_course_id")
+	@SequenceGenerator(name = "seq_module_id", allocationSize = 1)
 	Long id;
 	@Column(name="NAME", nullable=false, length=30)
 	String name;

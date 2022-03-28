@@ -15,7 +15,7 @@
 	      <a class="navbar-brand" href="#">Home</a>
 	    </div>
 	    <ul class="nav navbar-nav">
-	     <li class="nav-item"><a class="nav-link" href="/course/view">Courses</a></li>
+	      <li class="nav-item"><a class="nav-link" href="/course/view">Courses</a></li>
 	      <li class="nav-item"><a class="nav-link" href="/module/view">Modules</a></li>
 	      <li class="nav-item"><a class="nav-link" href="#">Assignments</a></li>
 	    </ul>

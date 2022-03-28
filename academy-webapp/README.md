@@ -88,7 +88,7 @@ https://reflectoring.io/spring-resttemplate/
 http://www.dotnetawesome.com/2015/12/multiselect-dropdown-with-checkbox-in-angularjs.html
 
 ## Task 4
-# Preclearance Task #3 - Unit Testing and Web Automation Testing
+### Preclearance Task #4 - Unit Testing and Web Automation Testing
 
 ## Tech Stack
  - Java 1.8.x 
@@ -153,4 +153,31 @@ https://www.softwaretestinghelp.com/spring-resttemplate-api-testing/ <br />
 https://frontbackend.com/java/how-to-stub-a-method-to-return-different-objects-on-subsequent-invocations-using-mockito
 https://stacktraceguru.com/unittest/mock-void-method
 
+## Task 5
+### Preclearance Task #5 - Unit Testing and Web Automation Testing
+
+### Tech Stack
+ - Eclipse IDE 
+ - VS Code 
+ - Angular 13.x 
+
+### Angular Project
+Install nvm and npm
+
+ 1. Download the [nvm-setup.zip](https://github.com/coreybutler/nvm-windows/releases) file for the most recent release
+ 2. Once downloaded, open the zip file, then open the nvm-setup.exe file.
+ 3. Follow instructions on Setup-NVM-for-Windows installation wizard. Run as administrator.
+ 4. Install the latest stable LTS release of Node.js
+
+	nvm list available
+	nvm install <version>
+
+Install Angular CLI (-g for global)
+	
+	npm i -g @angular/cli
+	
+ Install n
+ 
+### Reference
+https://phoenixnap.com/kb/install-node-js-npm-on-windows
 

@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Add Course Form</h1>
+<div id="courseDialogContentDiv" mat-dialog-content>
+  <form id="courseForm" [formGroup]="courseForm">
+      <input formControlName="id" matInput [hidden]=true>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input id="inputCourseName" formControlName="name" matInput placeholder="Course Name">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input id="inputDescription" formControlName="description" matInput placeholder="Course Description">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Version</mat-label>
+        <input id="inputVersion" formControlName="version" matInput placeholder="Course Version">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select id="inputStatus" formControlName="status" placeholder="Status">
+            <!-- TODO Get Status from enum--> 
+            <mat-option value="draft">Draft</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="inactive">Inactive</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contact</mat-label>
+        <input id="inputContact" formControlName="contact" matInput placeholder="Contact Email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Modules</mat-label>
+        <mat-select id="inputModules" formControlName="modules" placeholder="Modules">
+         <!-- TODO Add modules-->    
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Effective Start Date</mat-label>
+        <input formControlName="startDate" matInput [matDatepicker]="startPicker">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Effective End Date</mat-label>
+        <input  formControlName="endDate" matInput [matDatepicker]="endPicker">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field> -->
+  </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <!-- TODO Investigate why mat-dialog-close stopped working out of box -->
+  <button id="courseDialogCloseBtn" mat-raised-button color="warn" mat-dialog-close (click)="close()">Close</button>
+  <button id="courseDialogSaveBtn" style="margin-left: 8px" mat-raised-button color="primary" (click)="save()" [disabled]="courseForm.invalid">{{actionBtn}}</button>
+</div>

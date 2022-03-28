@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.prajina.academy.service.CourseService;
 
 @RestController
 @RequestMapping("/course")
+@CrossOrigin
 public class CourseController {
 	
 	@Autowired
@@ -31,7 +33,7 @@ public class CourseController {
 	
 	@GetMapping
 	ResponseEntity<?> findAll(@RequestParam(value="pageNum", defaultValue="0") Integer pageNum,
-			@RequestParam(value="pageSize", defaultValue="5") Integer pageSize,
+			@RequestParam(value="pageSize", defaultValue="100") Integer pageSize,
 			@RequestParam(value="sortBy", defaultValue="name") String sortBy) {
 		
 		return ResponseEntity.ok(service.findAll(pageNum, pageSize, sortBy));
