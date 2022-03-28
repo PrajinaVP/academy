@@ -15,6 +15,7 @@ import { CourseModuleComponent } from './course-module.component';
 import { CourseModuleRoutingModule } from './course-module-routing.module';
 import { CourseModuleDialogComponent } from './course-module-dialog/course-module-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material';
 
 
 
@@ -29,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
+    MatToolbarModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
