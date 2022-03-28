@@ -3,7 +3,7 @@
       <span>Courses</span>
       <span class="example-spacer"></span>
       
-      <button mat-raised-button color="warn" (click)="openDialog()">Add Course</button>
+      <button id="addBtn" mat-raised-button color="warn" (click)="openDialog()">Add Course</button>
     </mat-toolbar>
   </p>
 
@@ -47,7 +47,13 @@
     
         <ng-container matColumnDef="modules">
           <th mat-header-cell *matHeaderCellDef mat-sort-header  id="modules"> Modules </th>
-          <td mat-cell *matCellDef="let row"> {{row.modules}} </td>
+          <td mat-cell *matCellDef="let row"> 
+            <div>
+              <li *ngFor="let item of row.modules">
+                <span>{{item.id}}: {{item.name}}</span>
+              </li>
+            </div>
+           </td>
         </ng-container>
     
         <ng-container matColumnDef="startDate">
