@@ -14,7 +14,7 @@ export class DialogComponent implements OnInit {
   @Output() openDialogEvent = new EventEmitter();
   
   statusList = ["draft", "active", "inactive"];
-  courseForm !: FormGroup;
+  courseForm : FormGroup;
   actionBtn: string = 'Save';
 
   constructor(private formBuilder: FormBuilder,

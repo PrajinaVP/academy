@@ -4,8 +4,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,11 +43,20 @@ public class ModuleTest {
 	@FindBy(id="contact")
 	private WebElement contact;
 	
+	@FindBy(id="saveBtn")
+	private WebElement saveBtn;
+	
+	@FindBy(id="closeBtn")
+	private WebElement closeBtn;
+	
 	@FindBy(id="submitBtn")
 	private WebElement submitBtn;
 	
 	@FindBy(id="clearBtn")
 	private WebElement clearBtn;
+
+	@FindBy(id="moduleDialogContentDiv")
+	private WebElement moduleDialogContentDiv;	
 	
 	@FindBy(id="resultDiv")
 	private WebElement resultDiv;
@@ -59,6 +66,21 @@ public class ModuleTest {
 	
 	@FindBy(id="versionErrorDiv")
 	private WebElement versionErrorDiv;
+	
+	@FindBy(id="inputModuleName")
+	private WebElement inputModuleName;
+	
+	@FindBy(id="inputDescription")
+	private WebElement inputDescription;
+	
+	@FindBy(id="inputStatus")
+	private WebElement inputStatus;
+	
+	@FindBy(id="inputVersion")
+	private WebElement inputVersion;
+	
+	@FindBy(id="inputContact")
+	private WebElement inputContact;
 	
 	@BeforeSuite
 	public void setup() {
@@ -80,88 +102,92 @@ public class ModuleTest {
 	
 	@Test
 	public void testModulePageElements() {
-		assertTrue(isElementDisplayed("moduleForm", moduleForm));
 		assertTrue(isElementDisplayed("moduleName", moduleName));
 		assertTrue(isElementDisplayed("description", description));
 		assertTrue(isElementDisplayed("version", version));
 		assertTrue(isElementDisplayed("status", status));
 		assertTrue(isElementDisplayed("contact", contact));
-		assertTrue(isElementDisplayed("submitBtn", submitBtn));
-		assertTrue(isElementDisplayed("clearBtn", clearBtn));
 	}
 	
 	@Test
-	public void givenCoursePage_whenValidInput_thenCreateModule() {	
+	public void givenModulePage_whenClickAddModule_thenOpenModuleDialog() {	
 		
-		enterFormData("module name", "Module description", "v1", "active", "module@praj.com");
-		submit();
+		driver.findElement(By.id("addBtn")).click();
+		
 		String expectedUrl = MODULE_URL;
+		String currentUrl = driver.getCurrentUrl();
+		
+		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
+		assertTrue(isElementDisplayed("moduleDialogContentDiv",moduleDialogContentDiv), "Module List div is not displayed");
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+	}
+	
+	@Test
+	public void givenModulePage_whenValidInput_thenCreateModule() {	
+		enterFormData("module name", "Module description", "v1", "active", "module@praj.com");
+		save();
 		String currentUrl = driver.getCurrentUrl();
 		
 		assertEquals(currentUrl, MODULE_URL, "Actual page url is not the same as expected");
 		assertTrue(isElementDisplayed("resultDiv", resultDiv), "Module List div is not displayed");
-		assertFalse(isElementEnabled("submitBtn", submitBtn));
 	}
 	
 	@Test
-	public void givenCoursePage_whenEmptyRequiredInputFields_thenDisableAddBtnAndEnableClearBtn() {	
-		clear();
+	public void givenModulePage_whenEmptyRequiredInputFields_thenDisableAddBtnAndEnableClearBtn() {	
+
 		enterFormData("", "Module description", "v1", "active", "module@praj.com");
-		assertTrue(isElementDisplayed("nameErrorDiv", nameErrorDiv));
-		assertTrue(isElementDisplayed("versionErrorDiv", versionErrorDiv));
-		assertFalse(isElementEnabled("submitBtn", submitBtn));
-		assertTrue(isElementEnabled("clearBtn", clearBtn));
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
 		
-		clear();
+
 		enterFormData(null, "Module description", "v1", "active", "module@praj.com");
-		assertTrue(isElementDisplayed("nameErrorDiv", nameErrorDiv));
-		assertFalse(isElementEnabled("submitBtn", submitBtn));
-		assertTrue(isElementEnabled("clearBtn", clearBtn));
-		
-		clear();
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
+	
 		enterFormData("module name", "Module description", "", "active", "module@praj.com");
-		assertTrue(isElementDisplayed("versionErrorDiv", versionErrorDiv));
-		assertFalse(isElementEnabled("submitBtn", submitBtn));
-		assertTrue(isElementEnabled("clearBtn", clearBtn));
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
 		
-		clear();
 		enterFormData("module name", "Module description", null, "active", "module@praj.com");
-		assertTrue(isElementDisplayed("versionErrorDiv", versionErrorDiv));
-		assertFalse(isElementEnabled("submitBtn", submitBtn));
-		assertTrue(isElementEnabled("clearBtn", clearBtn));
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
 		
-		clear();
 		enterFormData("", "Module description", "", "active", "module@praj.com");
-		assertTrue(isElementDisplayed("nameErrorDiv", nameErrorDiv));
-		assertTrue(isElementDisplayed("versionErrorDiv", versionErrorDiv));
+		assertFalse(isElementEnabled("saveBtn", saveBtn));
+		assertTrue(isElementEnabled("closeBtn", closeBtn));
 	}
 	
 	public void enterFormData(String testName, String testDesc, String testVersion, String testStatus, String testContact) {
         if (moduleForm.isDisplayed()) {
         	if(testName != null) {
-            	moduleName.sendKeys(testName);
+        		inputModuleName.sendKeys(testName);
             }
             if(testDesc != null) {
-            	description.sendKeys(testDesc);
+            	inputDescription.sendKeys(testDesc);
             }
             if(testVersion != null) {
-            	version.sendKeys(testVersion);
+            	inputVersion.sendKeys(testVersion);
             }
             if(testStatus != null) {
-            	status.sendKeys(testStatus);
+            	inputStatus.sendKeys(testStatus);
             }
             if(testContact != null) {
-            	contact.sendKeys(testContact);
+            	inputContact.sendKeys(testContact);
             }
         }
     }
 	
-	private void submit() {
-		submitBtn.submit();
+	private void save() {
+		saveBtn.click();
+	}
+	
+	private void close() {
+		closeBtn.click();
 	}
 	
 	private void clear() {
-		clearBtn.submit();
+		closeBtn.submit();
 	}
 	
 	private boolean isElementDisplayed(String elementId, WebElement webElement) {

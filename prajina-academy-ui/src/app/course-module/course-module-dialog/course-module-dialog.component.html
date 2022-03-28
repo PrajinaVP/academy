@@ -1,23 +1,23 @@
 <h1 mat-dialog-title>Add Module Form</h1>
-<div mat-dialog-content>
-  <form [formGroup]="moduleForm">
+<div id="moduleDialogContentDiv" mat-dialog-content>
+  <form id="moduleForm" [formGroup]="moduleForm">
       <input formControlName="id" matInput [hidden]=true>
 
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
-        <input formControlName="name" matInput placeholder="Module Name">
+        <input id="inputModuleName" formControlName="name" matInput placeholder="Module Name">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
-        <input formControlName="description" matInput placeholder="Module Description">
+        <input id="inputDescription" formControlName="description" matInput placeholder="Module Description">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Version</mat-label>
-        <input  formControlName="version" matInput placeholder="Module Version">
+        <input id="inputVersion" formControlName="version" matInput placeholder="Module Version">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
-        <mat-select formControlName="status" placeholder="Status">
+        <mat-select id="inputStatus" formControlName="status" placeholder="Status">
             <!-- TODO Get Status from enum--> 
             <mat-option value="draft">Draft</mat-option>
             <mat-option value="active">Active</mat-option>
@@ -26,7 +26,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Contact</mat-label>
-        <input formControlName="contact" matInput placeholder="Contact Email">
+        <input id="inputContact" formControlName="contact" matInput placeholder="Contact Email">
       </mat-form-field>
       
       <!-- <mat-form-field appearance="outline">
@@ -44,6 +44,6 @@
   </form>
 </div>
 <div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="warn" mat-dialog-close (click)="close()">Close</button>
-  <button style="margin-left: 8px" mat-raised-button color="primary" (click)="save()">{{actionBtn}}</button>
+  <button id="closeBtn" mat-raised-button color="warn" mat-dialog-close (click)="close()">Close</button>
+  <button id="saveBtn" style="margin-left: 8px" mat-raised-button color="primary" (click)="save()" [disabled]="moduleForm.invalid">{{actionBtn}}</button>
 </div>
