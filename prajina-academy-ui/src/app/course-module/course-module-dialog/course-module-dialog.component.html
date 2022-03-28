@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Add Module Form</h1>
+<div mat-dialog-content>
+  <form [formGroup]="moduleForm">
+      <input formControlName="id" matInput [hidden]=true>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput placeholder="Module Name">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input formControlName="description" matInput placeholder="Module Description">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Version</mat-label>
+        <input  formControlName="version" matInput placeholder="Module Version">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" placeholder="Status">
+            <!-- TODO Get Status from enum--> 
+            <mat-option value="draft">Draft</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="inactive">Inactive</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contact</mat-label>
+        <input formControlName="contact" matInput placeholder="Contact Email">
+      </mat-form-field>
+      
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Effective Start Date</mat-label>
+        <input formControlName="startDate" matInput [matDatepicker]="startPicker">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Effective End Date</mat-label>
+        <input  formControlName="endDate" matInput [matDatepicker]="endPicker">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field> -->
+  </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close >Close</button>
+  <button style="margin-left: 8px" mat-raised-button color="primary" (click)="save()">{{actionBtn}}</button>
+</div>
