@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -21,9 +22,10 @@ public class LoginTest {
 	private static final String LOGIN_URL = "http://localhost:4200";
 	
 	WebDriver driver;
+	private WebDriverWait wait;
 	
-	@FindBy(id="userName")
-	private WebElement userName;
+	@FindBy(id="username")
+	private WebElement username;
 	
 	@FindBy(id="password")
 	private WebElement password;
@@ -37,8 +39,11 @@ public class LoginTest {
 	@FindBy(id="welcomeMsg")
 	private WebElement welcomeMsg;
 	
-	@FindBy(id="errorDiv")
-	private WebElement errorDiv;
+	@FindBy(id="errorUserNameDiv")
+	private WebElement errorUserNameDiv;
+	
+	@FindBy(id="errorPasswordDiv")
+	private WebElement errorPasswordDiv;
 	
 	@FindBy(id="errorMsg")
 	private WebElement errorMsg;
@@ -57,125 +62,57 @@ public class LoginTest {
 	}
 	
 	@BeforeTest
-	public void beforeEach() {
-		// Open test page
-//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-//		driver.manage().timeouts().scriptTimeout(Duration.ofMinutes(2));
-//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-		
+	public void beforeEach() {		
 		driver.navigate().to(LOGIN_URL);
+		wait = new WebDriverWait(driver, 10);
 	}
 	
 	@Test
 	public void givenLoginPage_whenValidUsernamePassword_thenOpenWelcomePage() {	
 		doLogin("philonoist", "philonoist");
-		String expectedUrl = LOGIN_URL;
+		String expectedUrl = LOGIN_URL + "/";
 		String currentUrl = driver.getCurrentUrl();
 		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
-		
-		assertTrue(welcomeDiv.isDisplayed(), "Welcome div is not displayed");
-		
-		String expectedMsg = "Welcome philonoist!";
-		String actualMsg = welcomeMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
-	}
-	
-	@Test
-	public void givenLoginPage_whenValidUsernameInvalidPassword_thenErrorOnLoginPage() {	
-		doLogin("philonoist", "invalid");
-		String expectedUrl = LOGIN_URL;
-		String currentUrl = driver.getCurrentUrl();
-		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
-		
-		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
+		//assertTrue(welcomeDiv.isDisplayed(), "Welcome div is not displayed");
 	}
 	
 	@Test
 	public void givenLoginPage_whenInValidUsernameValidPassword_thenErrorOnLoginPage() {	
-		doLogin("invalid", "philonoist");
-		String expectedUrl = LOGIN_URL;
-		String currentUrl = driver.getCurrentUrl();
-		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
+		doLogin("", "philonoist");
 		
 		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
+		assertTrue(errorUserNameDiv.isDisplayed(), "Error div is not displayed");
 	}
 	
 	@Test
 	public void givenLoginPage_whenInValidUsernameInValidPassword_thenErrorOnLoginPage() {	
-		doLogin("invalid", "invalid");
+		doLogin("", "");
 		
 		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
+		assertTrue(errorUserNameDiv.isDisplayed(), "Error div is not displayed");
+		assertTrue(errorPasswordDiv.isDisplayed(), "Error div is not displayed");
 	}
 	
 	@Test
 	public void givenLoginPage_whenNullUsernameValidPassword_thenErrorOnLoginPage() {	
 		doLogin(null, "philonoist");
-		String expectedUrl = LOGIN_URL;
-		String currentUrl = driver.getCurrentUrl();
-		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
 		
 		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
-	}
-	
-	@Test
-	public void givenLoginPage_whenValidUsernameNullPassword_thenErrorOnLoginPage() {	
-		doLogin("philonoist", null);
-		String expectedUrl = LOGIN_URL;
-		String currentUrl = driver.getCurrentUrl();
-		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
-		
-		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
+		assertTrue(errorUserNameDiv.isDisplayed(), "Error div is not displayed");
+		assertFalse(errorPasswordDiv.isDisplayed(), "Error div is not displayed");
 	}
 	
 	@Test
 	public void givenLoginPage_whenNullUsernameNullPassword_thenErrorOnLoginPage() {	
 		doLogin(null, null);
-		String expectedUrl = LOGIN_URL;
-		String currentUrl = driver.getCurrentUrl();
-		assertEquals(currentUrl, expectedUrl, "Actual page url is not the same as expected");
-		
 		assertFalse(isElementPresent("welcomeDiv"), "Welcome div is displayed incorrectly.");
-		assertFalse(isElementPresent("welcomeMsg"), "Welcome message is displayed incorrectly.");
-		assertTrue(errorDiv.isDisplayed(), "Error div is not displayed");
-		
-		String expectedMsg = "Invalid Login Credentials!";
-		String actualMsg = errorMsg.getText();
-		assertEquals(actualMsg, expectedMsg, "Actual message is not the same as the expected message");
+		assertTrue(errorUserNameDiv.isDisplayed(), "Error div is not displayed");
+		assertFalse(errorPasswordDiv.isDisplayed(), "Error div is not displayed");
 	}
 	private void doLogin(String testUserName, String testPassword) {
 		// enter password
 		if (testUserName != null) {
-			userName.sendKeys(testUserName);
+			username.sendKeys(testUserName);
 		}
 		if (testPassword != null) {
 			password.sendKeys(testPassword);

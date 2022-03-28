@@ -6,19 +6,19 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="was-validated">
             <div class="mb-3 mt-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" class="form-control" formControlName="username" id="username" placeholder="Enter username" name="username" required>
-                <div class="invalid-feedback">Please fill out this field.</div>
+                <input id="username" type="text" class="form-control" formControlName="username" id="username" placeholder="Enter username" name="username" required>
+                <div id="errorUserNameDiv" class="invalid-feedback">Please enter user name.</div>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" formControlName="password" id="password" placeholder="Enter password" name="password" required>
+                <input id="password" type="password" class="form-control" formControlName="password" id="password" placeholder="Enter password" name="password" required>
                 <!-- <input type="password" formControlName="password" class="form-control" placeholder="Password" 
                     [ngClass]="{ 'is-valid': submitted && myForm['password'].errors }"/> -->
      
-                <div class="invalid-feedback">Please fill out this field.</div>
+                <div id="errorPasswordDiv" class="invalid-feedback">Please enter password.</div>
               </div>
 
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button id="loginBtn" type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
