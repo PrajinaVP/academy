@@ -49,6 +49,7 @@
   </form>
 </div>
 <div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="warn" matDialogClose>Close</button>
+  <!-- TODO Investigate why mat-dialog-close stopped working out of box -->
+  <button mat-raised-button color="warn" mat-dialog-close (click)="close()">Close</button>
   <button style="margin-left: 8px" mat-raised-button color="primary" (click)="save()">{{actionBtn}}</button>
 </div>

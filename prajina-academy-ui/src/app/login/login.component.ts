@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     }
 
     if (this.loginForm.controls['username'].value === 'philonoist' && this.loginForm.controls['password'].value === 'philonoist') {
-      this.router.navigate(['/course'], { queryParams: { username: this.loginForm.controls['username'].value} });
+      this.router.navigate(['/home'], { queryParams: { username: this.loginForm.controls['username'].value} });
     }
   }
 

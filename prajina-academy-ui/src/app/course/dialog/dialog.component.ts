@@ -77,7 +77,6 @@ export class DialogComponent implements OnInit {
   }
 
   update() {
-    console.log(this.courseForm.value);
     if(this.courseForm.valid) {
       this.courseService.update(this.editData.id, this.courseForm.value)
         .subscribe({
@@ -91,5 +90,9 @@ export class DialogComponent implements OnInit {
           } 
         })
     }
+  }
+
+  close() {
+   this.dialogRef.close('close');
   }
 }

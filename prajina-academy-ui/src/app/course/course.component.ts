@@ -67,7 +67,6 @@ export class CourseComponent implements OnInit {
   }
 
   openDialog() {
-    alert("course open");
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '30%'
     }).afterClosed().subscribe(val=>{

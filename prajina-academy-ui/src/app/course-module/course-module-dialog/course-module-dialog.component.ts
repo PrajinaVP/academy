@@ -90,4 +90,8 @@ export class CourseModuleDialogComponent implements OnInit {
         })
     }
   }
+
+  close() {
+    this.dialogRef.close('close');
+  }
 }
