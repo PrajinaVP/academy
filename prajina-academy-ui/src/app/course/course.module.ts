@@ -15,9 +15,9 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
-import { DialogComponent } from './dialog/dialog.component';
+import { DialogComponent } from './course-dialog/course-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material';
+import { MatAutocompleteModule, MatToolbarModule } from '@angular/material';
 
 
 
@@ -29,6 +29,7 @@ import { MatToolbarModule } from '@angular/material';
   imports: [
     CommonModule,
     CourseRoutingModule,
+    MatAutocompleteModule,
     MatIconModule,
     MatButtonModule,
     MatInputModule,

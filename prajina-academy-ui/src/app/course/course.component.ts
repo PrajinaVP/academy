@@ -3,9 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CourseModuleService } from '../course-module/services/course-module.service';
 
 import { Course } from './course';
-import { DialogComponent } from './dialog/dialog.component';
+import { CourseModule } from './course.module';
+import { DialogComponent } from './course-dialog/course-dialog.component';
 import { CourseService } from './services/course.service';
 
 @Component({
@@ -20,7 +22,7 @@ export class CourseComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private courseService: CourseService) { }
+  constructor(private dialog: MatDialog, private courseService: CourseService, private moduleService: CourseModuleService) { }
 
   ngOnInit(): void {
     this.getAllCourses();
@@ -30,7 +32,6 @@ export class CourseComponent implements OnInit {
     this.courseService.getAll()
       .subscribe({
         next:(res)=>{
-          console.log(res);
           this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;

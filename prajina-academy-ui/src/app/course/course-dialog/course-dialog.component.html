@@ -30,10 +30,19 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Modules</mat-label>
-        <mat-select id="inputModules" formControlName="modules" placeholder="Modules">
-         <!-- TODO Add modules-->    
+        <mat-select id="inputModules" formControlName="modules" placeholder="Select Modules" multiple>
+          <mat-option *ngFor="let module of moduleDropDownList" [value]="module.name">
+           {{module.name}}
+          </mat-option>    
         </mat-select>
+        <!-- <input type="text" placeholder="Select module" aria-label="Number" matInput formControlName="modules" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let module of moduleDropDownList | async" [value]="module.name">
+            {{ module.name }}
+          </mat-option>
+        </mat-autocomplete> -->
       </mat-form-field>
+
       <!-- <mat-form-field appearance="outline">
         <mat-label>Effective Start Date</mat-label>
         <input formControlName="startDate" matInput [matDatepicker]="startPicker">
